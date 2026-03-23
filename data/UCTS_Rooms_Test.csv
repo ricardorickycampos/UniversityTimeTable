@@ -1,0 +1,4 @@
+room_id,capacity,is_lab,building
+R101,40,FALSE,ENG
+R202,60,FALSE,SCI
+LabA,24,TRUE,SCI

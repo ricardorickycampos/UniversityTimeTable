@@ -1,0 +1,4 @@
+section_id,course_id,enrollment,instructor_id,needs_lab,cohort_id,building_pref
+CSCI2301-01,CSCI2301,38,inst_lee,FALSE,cohort_freshman,ENG
+CSCI2400-01,CSCI2400,22,inst_ali,TRUE,cohort_sophomore,SCI
+CSCI3500-01,CSCI3500,45,inst_lee,FALSE,cohort_junior,SCI
