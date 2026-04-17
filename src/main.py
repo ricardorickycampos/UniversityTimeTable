@@ -1,38 +1,36 @@
-from parser import *
-from greedy import greedy_schedule
+from parser import parse_timetable
+from greedy import greedy_schedule, format_days, format_time
+
 
 def main():
-    #Filepaths
-    rooms_file = "../data/UCTS_Rooms_Test.csv"
-    timeslots_file = "../data/UCTS_Timeslots_Test.csv"
-    instructors_file = "../data/UCTS_Instructors_Test.csv"
-    sections_file = "../data/UCTS_Sections_Test.csv"
+    rooms, classes = parse_timetable("../data/pu-fal07-llr.xml")
 
-    #loading the data from the dataset
-    rooms = load_rooms(rooms_file)
-    timeslots, timeslot_info = load_timeslots(timeslots_file)
-    instructors = load_instructors(instructors_file)
-    sections, section_lookup = load_sections(sections_file)
+    room_lookup = {room.room_id: room for room in rooms}
 
-    #Running the search
-    schedule = greedy_schedule(
-        sections,
-        timeslots,
-        rooms,
-        instructors,
-        section_lookup
-    )
+    assignments, unscheduled = greedy_schedule(classes, room_lookup)
 
-    #Output schedule
-    print("\nFinal Schedule:\n")
-    for sec, (t, r) in schedule.items():
-        s = section_lookup[sec]
+    print(f"\nScheduled {len(assignments)} out of {len(classes)} classes\n")
+
+    print("Scheduled Classes:")
+    for class_id in sorted(assignments):
+        assignment = assignments[class_id]
+        time = assignment["time"]
+
+        days = format_days(time.days)
+        start = format_time(time.start)
+        end = format_time(time.start + time.length)
 
         print(
-            f"{sec} | Course: {s['course_id']} | "
-            f"Instructor: {s['instructor']} | "
-            f"Timeslot: {t} | Room: {r}"
+            f"Class {class_id:>4} | "
+            f"Room {assignment['room']:>3} | "
+            f"{days:<15} | "
+            f"{start} - {end}"
         )
+
+    print("\nUnscheduled Classes:")
+    for class_id in sorted(unscheduled):
+        print(f"Class {class_id}")
+
 
 if __name__ == "__main__":
     main()

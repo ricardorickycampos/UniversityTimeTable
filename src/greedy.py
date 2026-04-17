@@ -1,77 +1,117 @@
-def greedy_schedule(sections, timeslots, rooms, instructors, section_lookup):
-    schedule = {}
+def class_difficulty(course):
+    return len(course.room_options) * len(course.time_options)
 
-    def is_feasible(section, timeslot, room):
-        inst = section["instructor"]
 
-        if timeslot in instructors[inst]["unavailable"]:
-            return False
-        if timeslot in instructors[inst]["required_no_teach"]:
-            return False
+def overlaps(time1, time2):
+    #same day checking
+    for i in range(len(time1.days)):
+        if time1.days[i] == '1' and time2.days[i] == '1':
+            start1 = time1.start
+            end1 = time1.start + time1.length
 
-        if section["enrollment"] > rooms[room]["capacity"]:
-            return False
+            start2 = time2.start
+            end2 = time2.start + time2.length
 
-        if section["needs_lab"] and not rooms[room]["is_lab"]:
-            return False
+            if start1 < end2 and start2 < end1:
+                return True
+    return False
 
-        for s_id, (t, r) in schedule.items():
-            other = section_lookup[s_id]
+def format_days(day_string):
+    #turns the binary for the days into actual days
+    day_names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
-            if t == timeslot:
-                if r == room:
-                    return False
-                if other["instructor"] == inst:
-                    return False
-                if other["cohort"] == section["cohort"]:
-                    return False
+    result = []
+    for i, ch in enumerate(day_string):
+        if ch == "1":
+            result.append(day_names[i])
 
-        return True
+    return "/".join(result)
 
-    def soft_penalty(section, timeslot, room):
-        penalty = 0
-        inst = section["instructor"]
 
-        if timeslot not in instructors[inst]["preferred"]:
-            penalty += 1
+def format_time(slot):
+    #helps make the time part of the dataset less ugly
+    total_minutes = slot * 5
 
-        if rooms[room]["building"] != section["building_pref"]:
-            penalty += 1
+    hours = total_minutes // 60
+    minutes = total_minutes % 60
 
-        for s_id, (t, r) in schedule.items():
-            other = section_lookup[s_id]
+    suffix = "AM"
+    if hours >= 12:
+        suffix = "PM"
 
-            if other["cohort"] == section["cohort"]:
-                if t != timeslot:
-                    penalty += 1
+    display_hour = hours % 12
+    if display_hour == 0:
+        display_hour = 12
 
-        return penalty
+    return f"{display_hour}:{minutes:02d} {suffix}"
 
-    #Sorts sections and prioritizes labs
-    sections_sorted = sorted(
-        sections,
-        key=lambda s: (-s["enrollment"], -int(s["needs_lab"]))
-    )
+def greedy_schedule(classes, room_lookup):
+    unscheduled = []
 
-    for section in sections_sorted:
-        best_choice = None
-        best_score = float("inf")
+    room_schedule = {}         #room_id -> list of assigned time options
+    instructor_schedule = {}   #instructor_id -> list of assigned time options
 
-        for t in timeslots:
-            for r in rooms:
-                if not is_feasible(section, t, r):
+    assignments = {}
+
+    sorted_classes = sorted(classes, key=class_difficulty)
+
+    for course in sorted_classes:
+        assigned = False
+
+        #sort by best preference first
+        time_options = sorted(course.time_options, key=lambda t: t.preference, reverse=True)
+        room_options = sorted(course.room_options, key=lambda r: r.preference, reverse=True)
+
+        for time in time_options:
+            for room in room_options:
+
+                #capacity check
+                room_obj = room_lookup[room.room_id]
+
+                if room_obj.capacity < course.class_limit:
                     continue
 
-                score = soft_penalty(section, t, r)
+                #room conflict check
+                room_conflict = False
+                if room.room_id in room_schedule:
+                    for existing_time in room_schedule[room.room_id]:
+                        if overlaps(time, existing_time):
+                            room_conflict = True
+                            break
 
-                if score < best_score:
-                    best_score = score
-                    best_choice = (t, r)
+                if room_conflict:
+                    continue
 
-        if best_choice is None:
-            print(f"Failed to schedule {section['id']}")
-            continue
+                #instructor conflict check
+                instructor_conflict = False
+                for instructor in course.instructors:
+                    if instructor in instructor_schedule:
+                        for existing_time in instructor_schedule[instructor]:
+                            if overlaps(time, existing_time):
+                                instructor_conflict = True
+                                break
 
-        schedule[section["id"]] = best_choice
+                if instructor_conflict:
+                    continue
 
-    return schedule
+                #assignment found
+                assignments[course.class_id] = {
+                    "room": room.room_id,
+                    "time": time
+                }
+
+                room_schedule.setdefault(room.room_id, []).append(time)
+
+                for instructor in course.instructors:
+                    instructor_schedule.setdefault(instructor, []).append(time)
+
+                assigned = True
+                break
+
+            if assigned:
+                break
+
+        if not assigned:
+            unscheduled.append(course.class_id)
+
+    return assignments, unscheduled
