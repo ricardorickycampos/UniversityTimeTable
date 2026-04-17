@@ -51,3 +51,16 @@ class CourseClass:
     instructors: List[int] = field(default_factory=list)
     room_options: List[RoomOption] = field(default_factory=list)
     time_options: List[TimeOption] = field(default_factory=list)
+
+@dataclass
+class Instructor:
+    instructor_id: int
+    external_id: str
+    name: str
+
+@dataclass
+class Offering:
+    offering_id: int
+    name: str
+    course: str
+    subject_area: str

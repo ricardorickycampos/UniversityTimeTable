@@ -5,7 +5,9 @@ from classes import (
     RoomSharing,
     CourseClass,
     RoomOption,
-    TimeOption
+    TimeOption,
+    Instructor,
+    Offering
 )
 
 def parse_bool(value: str) -> bool:
@@ -118,6 +120,68 @@ def parse_timetable(xml_file):
 
     rooms = parse_rooms(root)
     classes = parse_classes(root)
+    instructors = parse_instructors(root)
+    offerings = parse_offerings(root)
 
-    return rooms, classes
+    return rooms, classes, instructors, offerings
 
+def parse_instructors(root):
+    instructors = []
+
+    instructors_section = root.find("instructors")
+
+    if instructors_section is None:
+        return instructors
+
+    for inst_elem in instructors_section.findall("instructor"):
+        name = inst_elem.get("name")
+
+        if name is None:
+            name_elem = inst_elem.find("name")
+            if name_elem is not None and name_elem.text:
+                name = name_elem.text.strip()
+
+        instructors.append(
+            Instructor(
+                instructor_id=int(inst_elem.get("id")),
+                external_id=inst_elem.get("externalId", ""),
+                name=name if name else f"Instructor {inst_elem.get('id')}"
+            )
+        )
+
+    return instructors
+
+def parse_offerings(root):
+    offerings = []
+
+    offerings_section = root.find("offerings")
+
+    if offerings_section is None:
+        return offerings
+
+    for offering_elem in offerings_section.findall("offering"):
+        offering_id = int(offering_elem.get("id"))
+
+        course_name = f"Offering {offering_id}"
+        subject_area = ""
+        course_number = ""
+
+        course_elem = offering_elem.find(".//course")
+
+        if course_elem is not None:
+            subject_area = course_elem.get("subjectArea", "")
+            course_number = course_elem.get("courseNbr", "")
+
+            if subject_area or course_number:
+                course_name = f"{subject_area} {course_number}".strip()
+
+        offerings.append(
+            Offering(
+                offering_id=offering_id,
+                name=course_name,
+                course=course_number,
+                subject_area=subject_area
+            )
+        )
+
+    return offerings
