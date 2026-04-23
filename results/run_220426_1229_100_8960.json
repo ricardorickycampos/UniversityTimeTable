@@ -1,0 +1,1478 @@
+{
+  "timestamp": "220426_1229",
+  "config_path": "scripts/config.yaml",
+  "config": {
+    "data": {
+      "input_path": "data/data.xml",
+      "subset": 100
+    },
+    "student_sectioning": {
+      "sample_size": 500
+    },
+    "ga": {
+      "population_size": 100,
+      "n_generations": 200,
+      "crossover_rate": 0.7,
+      "mutation_rate": 0.002,
+      "tournament_size": 3,
+      "elitism_count": 2,
+      "random_seed": 42
+    },
+    "phase2": {
+      "ga": {
+        "population_size": 15,
+        "n_generations": 50,
+        "crossover_rate": 0.7,
+        "mutation_rate": 0.001,
+        "tournament_size": 3,
+        "elitism_count": 2,
+        "random_seed": 42
+      }
+    },
+    "local_search": {
+      "enabled": false,
+      "top_k": 2,
+      "max_passes": 1,
+      "apply_every_n_gens": 100
+    },
+    "fitness": {
+      "hard_weight": 1000.0
+    },
+    "output": {
+      "results_dir": "results",
+      "outputs_dir": "outputs"
+    }
+  },
+  "data_summary": {
+    "n_classes": 100,
+    "n_rooms": 63,
+    "n_students": 6564,
+    "n_group_constraints": 24
+  },
+  "total_seconds": 28.109342582989484,
+  "stopped_early": false,
+  "final_fitness": 8960.5,
+  "final_breakdown": {
+    "fitness": 8960.5,
+    "hard_total": 0,
+    "soft_total": 8960.5,
+    "hard": {
+      "room_conflicts": 0,
+      "instructor_conflicts": 0,
+      "room_sharing": 0,
+      "group": 0,
+      "total": 0
+    },
+    "soft": {
+      "preferences": -539.5,
+      "instructor_workload": 0.0,
+      "group": 5000.0,
+      "capacity": 4500.0,
+      "total": 8960.5
+    },
+    "is_feasible": true
+  },
+  "genome_path": "results/run_220426_1229_100_8960_best.npy",
+  "history": [
+    {
+      "generation": 0,
+      "best_fitness": 16981.5,
+      "avg_fitness": 24024.6,
+      "worst_fitness": 32971.5,
+      "elapsed_seconds": 0.15362070791888982
+    },
+    {
+      "generation": 1,
+      "best_fitness": 16643.0,
+      "avg_fitness": 21583.645,
+      "worst_fitness": 27230.5,
+      "elapsed_seconds": 0.2936139579396695
+    },
+    {
+      "generation": 2,
+      "best_fitness": 14652.0,
+      "avg_fitness": 20292.765,
+      "worst_fitness": 26226.0,
+      "elapsed_seconds": 0.43232370796613395
+    },
+    {
+      "generation": 3,
+      "best_fitness": 13955.0,
+      "avg_fitness": 19026.445,
+      "worst_fitness": 28474.5,
+      "elapsed_seconds": 0.5731032909825444
+    },
+    {
+      "generation": 4,
+      "best_fitness": 13953.0,
+      "avg_fitness": 18166.715,
+      "worst_fitness": 25197.5,
+      "elapsed_seconds": 0.7139790409710258
+    },
+    {
+      "generation": 5,
+      "best_fitness": 13677.5,
+      "avg_fitness": 17135.375,
+      "worst_fitness": 22002.5,
+      "elapsed_seconds": 0.8537167910253629
+    },
+    {
+      "generation": 6,
+      "best_fitness": 12182.5,
+      "avg_fitness": 16436.78,
+      "worst_fitness": 21130.5,
+      "elapsed_seconds": 0.9932947909692302
+    },
+    {
+      "generation": 7,
+      "best_fitness": 12025.0,
+      "avg_fitness": 15259.935,
+      "worst_fitness": 20924.0,
+      "elapsed_seconds": 1.1324533330043778
+    },
+    {
+      "generation": 8,
+      "best_fitness": 11169.0,
+      "avg_fitness": 14038.14,
+      "worst_fitness": 19462.5,
+      "elapsed_seconds": 1.2726601249305531
+    },
+    {
+      "generation": 9,
+      "best_fitness": 9989.0,
+      "avg_fitness": 13084.545,
+      "worst_fitness": 17201.5,
+      "elapsed_seconds": 1.4135286249220371
+    },
+    {
+      "generation": 10,
+      "best_fitness": 9965.5,
+      "avg_fitness": 12275.805,
+      "worst_fitness": 16207.0,
+      "elapsed_seconds": 1.5524721660185605
+    },
+    {
+      "generation": 11,
+      "best_fitness": 9926.5,
+      "avg_fitness": 11498.85,
+      "worst_fitness": 14739.0,
+      "elapsed_seconds": 1.6909526250092313
+    },
+    {
+      "generation": 12,
+      "best_fitness": 9926.5,
+      "avg_fitness": 10925.76,
+      "worst_fitness": 15239.0,
+      "elapsed_seconds": 1.8327442499576136
+    },
+    {
+      "generation": 13,
+      "best_fitness": 9906.0,
+      "avg_fitness": 10551.225,
+      "worst_fitness": 13064.5,
+      "elapsed_seconds": 1.9735424580285326
+    },
+    {
+      "generation": 14,
+      "best_fitness": 9906.0,
+      "avg_fitness": 10296.075,
+      "worst_fitness": 12200.0,
+      "elapsed_seconds": 2.112942082923837
+    },
+    {
+      "generation": 15,
+      "best_fitness": 9894.0,
+      "avg_fitness": 10054.38,
+      "worst_fitness": 11796.0,
+      "elapsed_seconds": 2.2511894579511136
+    },
+    {
+      "generation": 16,
+      "best_fitness": 9889.0,
+      "avg_fitness": 9998.08,
+      "worst_fitness": 11143.5,
+      "elapsed_seconds": 2.3912162909982726
+    },
+    {
+      "generation": 17,
+      "best_fitness": 9885.0,
+      "avg_fitness": 9995.445,
+      "worst_fitness": 10927.0,
+      "elapsed_seconds": 2.5332390000112355
+    },
+    {
+      "generation": 18,
+      "best_fitness": 9861.0,
+      "avg_fitness": 9954.81,
+      "worst_fitness": 10951.5,
+      "elapsed_seconds": 2.6719127079704776
+    },
+    {
+      "generation": 19,
+      "best_fitness": 9861.0,
+      "avg_fitness": 9930.345,
+      "worst_fitness": 11401.0,
+      "elapsed_seconds": 2.811680915998295
+    },
+    {
+      "generation": 20,
+      "best_fitness": 9849.0,
+      "avg_fitness": 9922.145,
+      "worst_fitness": 10889.0,
+      "elapsed_seconds": 2.9522132909623906
+    },
+    {
+      "generation": 21,
+      "best_fitness": 9839.0,
+      "avg_fitness": 9928.1,
+      "worst_fitness": 10897.0,
+      "elapsed_seconds": 3.094562540994957
+    },
+    {
+      "generation": 22,
+      "best_fitness": 9838.0,
+      "avg_fitness": 9934.86,
+      "worst_fitness": 10881.0,
+      "elapsed_seconds": 3.235700207995251
+    },
+    {
+      "generation": 23,
+      "best_fitness": 9832.0,
+      "avg_fitness": 9949.265,
+      "worst_fitness": 11860.0,
+      "elapsed_seconds": 3.3751256249379367
+    },
+    {
+      "generation": 24,
+      "best_fitness": 9822.0,
+      "avg_fitness": 9886.38,
+      "worst_fitness": 10886.0,
+      "elapsed_seconds": 3.515769416000694
+    },
+    {
+      "generation": 25,
+      "best_fitness": 9821.0,
+      "avg_fitness": 9869.25,
+      "worst_fitness": 10847.0,
+      "elapsed_seconds": 3.656724166008644
+    },
+    {
+      "generation": 26,
+      "best_fitness": 9800.0,
+      "avg_fitness": 9892.365,
+      "worst_fitness": 11866.0,
+      "elapsed_seconds": 3.794882290996611
+    },
+    {
+      "generation": 27,
+      "best_fitness": 9783.0,
+      "avg_fitness": 9832.13,
+      "worst_fitness": 10788.0,
+      "elapsed_seconds": 3.934375040931627
+    },
+    {
+      "generation": 28,
+      "best_fitness": 9776.0,
+      "avg_fitness": 9871.475,
+      "worst_fitness": 11787.0,
+      "elapsed_seconds": 4.074163708020933
+    },
+    {
+      "generation": 29,
+      "best_fitness": 9772.0,
+      "avg_fitness": 9842.72,
+      "worst_fitness": 10833.5,
+      "elapsed_seconds": 4.215265832957812
+    },
+    {
+      "generation": 30,
+      "best_fitness": 9772.0,
+      "avg_fitness": 9806.865,
+      "worst_fitness": 10800.0,
+      "elapsed_seconds": 4.354754250030965
+    },
+    {
+      "generation": 31,
+      "best_fitness": 9769.0,
+      "avg_fitness": 9812.8,
+      "worst_fitness": 10976.0,
+      "elapsed_seconds": 4.491461040917784
+    },
+    {
+      "generation": 32,
+      "best_fitness": 9769.0,
+      "avg_fitness": 9820.445,
+      "worst_fitness": 10781.0,
+      "elapsed_seconds": 4.627633332973346
+    },
+    {
+      "generation": 33,
+      "best_fitness": 9765.0,
+      "avg_fitness": 9846.515,
+      "worst_fitness": 11773.0,
+      "elapsed_seconds": 4.764183207997121
+    },
+    {
+      "generation": 34,
+      "best_fitness": 9765.0,
+      "avg_fitness": 9822.07,
+      "worst_fitness": 10970.0,
+      "elapsed_seconds": 4.902288832934573
+    },
+    {
+      "generation": 35,
+      "best_fitness": 9764.0,
+      "avg_fitness": 9808.78,
+      "worst_fitness": 10774.0,
+      "elapsed_seconds": 5.0426462079631165
+    },
+    {
+      "generation": 36,
+      "best_fitness": 9764.0,
+      "avg_fitness": 9831.805,
+      "worst_fitness": 11767.0,
+      "elapsed_seconds": 5.181014125002548
+    },
+    {
+      "generation": 37,
+      "best_fitness": 9764.0,
+      "avg_fitness": 9766.095,
+      "worst_fitness": 9807.0,
+      "elapsed_seconds": 5.320479332935065
+    },
+    {
+      "generation": 38,
+      "best_fitness": 9762.5,
+      "avg_fitness": 9804.845,
+      "worst_fitness": 11764.0,
+      "elapsed_seconds": 5.459069874952547
+    },
+    {
+      "generation": 39,
+      "best_fitness": 9762.5,
+      "avg_fitness": 9798.795,
+      "worst_fitness": 12765.0,
+      "elapsed_seconds": 5.595832624938339
+    },
+    {
+      "generation": 40,
+      "best_fitness": 9762.0,
+      "avg_fitness": 9789.45,
+      "worst_fitness": 10768.0,
+      "elapsed_seconds": 5.733401124947704
+    },
+    {
+      "generation": 41,
+      "best_fitness": 9761.5,
+      "avg_fitness": 9775.225,
+      "worst_fitness": 10766.0,
+      "elapsed_seconds": 5.8723428749945015
+    },
+    {
+      "generation": 42,
+      "best_fitness": 9760.0,
+      "avg_fitness": 9793.48,
+      "worst_fitness": 10762.0,
+      "elapsed_seconds": 6.011991749983281
+    },
+    {
+      "generation": 43,
+      "best_fitness": 9758.5,
+      "avg_fitness": 9804.13,
+      "worst_fitness": 10765.5,
+      "elapsed_seconds": 6.153423915966414
+    },
+    {
+      "generation": 44,
+      "best_fitness": 9750.0,
+      "avg_fitness": 9821.62,
+      "worst_fitness": 10774.5,
+      "elapsed_seconds": 6.293347999919206
+    },
+    {
+      "generation": 45,
+      "best_fitness": 9750.0,
+      "avg_fitness": 9795.43,
+      "worst_fitness": 10784.5,
+      "elapsed_seconds": 6.43201983300969
+    },
+    {
+      "generation": 46,
+      "best_fitness": 9748.0,
+      "avg_fitness": 9773.64,
+      "worst_fitness": 10762.5,
+      "elapsed_seconds": 6.568812874960713
+    },
+    {
+      "generation": 47,
+      "best_fitness": 9747.5,
+      "avg_fitness": 9805.76,
+      "worst_fitness": 10769.0,
+      "elapsed_seconds": 6.707628582953475
+    },
+    {
+      "generation": 48,
+      "best_fitness": 9744.0,
+      "avg_fitness": 9762.37,
+      "worst_fitness": 10750.0,
+      "elapsed_seconds": 6.8460189999314025
+    },
+    {
+      "generation": 49,
+      "best_fitness": 9744.0,
+      "avg_fitness": 9784.79,
+      "worst_fitness": 10752.0,
+      "elapsed_seconds": 6.985778874950483
+    },
+    {
+      "generation": 50,
+      "best_fitness": 9743.0,
+      "avg_fitness": 9757.97,
+      "worst_fitness": 10747.5,
+      "elapsed_seconds": 7.123183666029945
+    },
+    {
+      "generation": 51,
+      "best_fitness": 9738.5,
+      "avg_fitness": 9777.8,
+      "worst_fitness": 10787.5,
+      "elapsed_seconds": 7.261105499928817
+    },
+    {
+      "generation": 52,
+      "best_fitness": 9738.0,
+      "avg_fitness": 9795.425,
+      "worst_fitness": 10791.0,
+      "elapsed_seconds": 7.3994127080077305
+    },
+    {
+      "generation": 53,
+      "best_fitness": 9733.5,
+      "avg_fitness": 9769.95,
+      "worst_fitness": 10936.0,
+      "elapsed_seconds": 7.537681791000068
+    },
+    {
+      "generation": 54,
+      "best_fitness": 9733.5,
+      "avg_fitness": 9805.175,
+      "worst_fitness": 11760.5,
+      "elapsed_seconds": 7.67417720798403
+    },
+    {
+      "generation": 55,
+      "best_fitness": 9732.5,
+      "avg_fitness": 9776.225,
+      "worst_fitness": 10766.5,
+      "elapsed_seconds": 7.814196415944025
+    },
+    {
+      "generation": 56,
+      "best_fitness": 9694.0,
+      "avg_fitness": 9804.11,
+      "worst_fitness": 11733.5,
+      "elapsed_seconds": 7.95418170792982
+    },
+    {
+      "generation": 57,
+      "best_fitness": 9693.0,
+      "avg_fitness": 9793.155,
+      "worst_fitness": 11734.0,
+      "elapsed_seconds": 8.094777832971886
+    },
+    {
+      "generation": 58,
+      "best_fitness": 9693.0,
+      "avg_fitness": 9750.1,
+      "worst_fitness": 10767.0,
+      "elapsed_seconds": 8.23010466597043
+    },
+    {
+      "generation": 59,
+      "best_fitness": 9692.0,
+      "avg_fitness": 9745.765,
+      "worst_fitness": 11193.0,
+      "elapsed_seconds": 8.367637624964118
+    },
+    {
+      "generation": 60,
+      "best_fitness": 9690.0,
+      "avg_fitness": 9718.585,
+      "worst_fitness": 10693.0,
+      "elapsed_seconds": 8.50647783302702
+    },
+    {
+      "generation": 61,
+      "best_fitness": 9690.0,
+      "avg_fitness": 9729.545,
+      "worst_fitness": 10697.0,
+      "elapsed_seconds": 8.644143083016388
+    },
+    {
+      "generation": 62,
+      "best_fitness": 9688.5,
+      "avg_fitness": 9712.37,
+      "worst_fitness": 10708.5,
+      "elapsed_seconds": 8.782927624997683
+    },
+    {
+      "generation": 63,
+      "best_fitness": 9688.5,
+      "avg_fitness": 9712.585,
+      "worst_fitness": 11696.0,
+      "elapsed_seconds": 8.922752541024238
+    },
+    {
+      "generation": 64,
+      "best_fitness": 9688.5,
+      "avg_fitness": 9710.68,
+      "worst_fitness": 10692.0,
+      "elapsed_seconds": 9.06133499997668
+    },
+    {
+      "generation": 65,
+      "best_fitness": 9688.5,
+      "avg_fitness": 9712.175,
+      "worst_fitness": 10690.0,
+      "elapsed_seconds": 9.201141000026837
+    },
+    {
+      "generation": 66,
+      "best_fitness": 9688.5,
+      "avg_fitness": 9694.01,
+      "worst_fitness": 10188.5,
+      "elapsed_seconds": 9.336978666018695
+    },
+    {
+      "generation": 67,
+      "best_fitness": 9688.5,
+      "avg_fitness": 9758.58,
+      "worst_fitness": 11688.5,
+      "elapsed_seconds": 9.475924375001341
+    },
+    {
+      "generation": 68,
+      "best_fitness": 9684.5,
+      "avg_fitness": 9719.105,
+      "worst_fitness": 10712.5,
+      "elapsed_seconds": 9.616128250025213
+    },
+    {
+      "generation": 69,
+      "best_fitness": 9684.5,
+      "avg_fitness": 9710.985,
+      "worst_fitness": 10728.5,
+      "elapsed_seconds": 9.755713250022382
+    },
+    {
+      "generation": 70,
+      "best_fitness": 9684.5,
+      "avg_fitness": 9758.16,
+      "worst_fitness": 11688.5,
+      "elapsed_seconds": 9.895133874961175
+    },
+    {
+      "generation": 71,
+      "best_fitness": 9678.5,
+      "avg_fitness": 9737.455,
+      "worst_fitness": 10727.0,
+      "elapsed_seconds": 10.031997582991607
+    },
+    {
+      "generation": 72,
+      "best_fitness": 9678.5,
+      "avg_fitness": 9757.89,
+      "worst_fitness": 11692.5,
+      "elapsed_seconds": 10.16938074992504
+    },
+    {
+      "generation": 73,
+      "best_fitness": 9674.5,
+      "avg_fitness": 9718.365,
+      "worst_fitness": 11184.5,
+      "elapsed_seconds": 10.30486537492834
+    },
+    {
+      "generation": 74,
+      "best_fitness": 9674.5,
+      "avg_fitness": 9741.425,
+      "worst_fitness": 11684.5,
+      "elapsed_seconds": 10.441561333020218
+    },
+    {
+      "generation": 75,
+      "best_fitness": 9674.5,
+      "avg_fitness": 9752.855,
+      "worst_fitness": 11693.0,
+      "elapsed_seconds": 10.580262249917723
+    },
+    {
+      "generation": 76,
+      "best_fitness": 9672.5,
+      "avg_fitness": 9705.775,
+      "worst_fitness": 10684.0,
+      "elapsed_seconds": 10.717488165944815
+    },
+    {
+      "generation": 77,
+      "best_fitness": 9672.5,
+      "avg_fitness": 9727.22,
+      "worst_fitness": 11674.5,
+      "elapsed_seconds": 10.855000540963374
+    },
+    {
+      "generation": 78,
+      "best_fitness": 9671.0,
+      "avg_fitness": 9728.645,
+      "worst_fitness": 10872.5,
+      "elapsed_seconds": 10.991779249976389
+    },
+    {
+      "generation": 79,
+      "best_fitness": 9671.0,
+      "avg_fitness": 9693.48,
+      "worst_fitness": 10680.5,
+      "elapsed_seconds": 11.130039540934376
+    },
+    {
+      "generation": 80,
+      "best_fitness": 9671.0,
+      "avg_fitness": 9693.115,
+      "worst_fitness": 10695.0,
+      "elapsed_seconds": 11.268890165956691
+    },
+    {
+      "generation": 81,
+      "best_fitness": 9671.0,
+      "avg_fitness": 9708.045,
+      "worst_fitness": 11215.0,
+      "elapsed_seconds": 11.410424040979706
+    },
+    {
+      "generation": 82,
+      "best_fitness": 9671.0,
+      "avg_fitness": 9742.595,
+      "worst_fitness": 12711.5,
+      "elapsed_seconds": 11.547308499924839
+    },
+    {
+      "generation": 83,
+      "best_fitness": 9671.0,
+      "avg_fitness": 9696.155,
+      "worst_fitness": 11171.0,
+      "elapsed_seconds": 11.685694999992847
+    },
+    {
+      "generation": 84,
+      "best_fitness": 9671.0,
+      "avg_fitness": 9693.515,
+      "worst_fitness": 10671.0,
+      "elapsed_seconds": 11.825046582962386
+    },
+    {
+      "generation": 85,
+      "best_fitness": 9671.0,
+      "avg_fitness": 9712.335,
+      "worst_fitness": 10711.0,
+      "elapsed_seconds": 11.96718612499535
+    },
+    {
+      "generation": 86,
+      "best_fitness": 9661.0,
+      "avg_fitness": 9704.77,
+      "worst_fitness": 10711.5,
+      "elapsed_seconds": 12.104987624916248
+    },
+    {
+      "generation": 87,
+      "best_fitness": 9661.0,
+      "avg_fitness": 9730.945,
+      "worst_fitness": 11671.0,
+      "elapsed_seconds": 12.243838707916439
+    },
+    {
+      "generation": 88,
+      "best_fitness": 9661.0,
+      "avg_fitness": 9700.56,
+      "worst_fitness": 10677.0,
+      "elapsed_seconds": 12.384821999934502
+    },
+    {
+      "generation": 89,
+      "best_fitness": 9661.0,
+      "avg_fitness": 9694.47,
+      "worst_fitness": 10675.0,
+      "elapsed_seconds": 12.526822541025467
+    },
+    {
+      "generation": 90,
+      "best_fitness": 9661.0,
+      "avg_fitness": 9709.23,
+      "worst_fitness": 10671.0,
+      "elapsed_seconds": 12.666126749943942
+    },
+    {
+      "generation": 91,
+      "best_fitness": 9661.0,
+      "avg_fitness": 9721.925,
+      "worst_fitness": 10711.0,
+      "elapsed_seconds": 12.805574500001967
+    },
+    {
+      "generation": 92,
+      "best_fitness": 9661.0,
+      "avg_fitness": 9711.935,
+      "worst_fitness": 10708.0,
+      "elapsed_seconds": 12.943925499916077
+    },
+    {
+      "generation": 93,
+      "best_fitness": 9661.0,
+      "avg_fitness": 9715.51,
+      "worst_fitness": 10853.0,
+      "elapsed_seconds": 13.084221165976487
+    },
+    {
+      "generation": 94,
+      "best_fitness": 9657.0,
+      "avg_fitness": 9668.595,
+      "worst_fitness": 10167.0,
+      "elapsed_seconds": 13.224354290985502
+    },
+    {
+      "generation": 95,
+      "best_fitness": 9657.0,
+      "avg_fitness": 9701.37,
+      "worst_fitness": 11661.0,
+      "elapsed_seconds": 13.364212999935262
+    },
+    {
+      "generation": 96,
+      "best_fitness": 9656.5,
+      "avg_fitness": 9681.31,
+      "worst_fitness": 10665.5,
+      "elapsed_seconds": 13.503284957958385
+    },
+    {
+      "generation": 97,
+      "best_fitness": 9656.5,
+      "avg_fitness": 9680.925,
+      "worst_fitness": 10660.5,
+      "elapsed_seconds": 13.642247374984436
+    },
+    {
+      "generation": 98,
+      "best_fitness": 9656.5,
+      "avg_fitness": 9700.135,
+      "worst_fitness": 11673.0,
+      "elapsed_seconds": 13.783110333024524
+    },
+    {
+      "generation": 99,
+      "best_fitness": 9656.5,
+      "avg_fitness": 9700.67,
+      "worst_fitness": 11659.0,
+      "elapsed_seconds": 13.92209062492475
+    },
+    {
+      "generation": 100,
+      "best_fitness": 9656.5,
+      "avg_fitness": 9690.01,
+      "worst_fitness": 10674.5,
+      "elapsed_seconds": 14.060647957958281
+    },
+    {
+      "generation": 101,
+      "best_fitness": 9656.5,
+      "avg_fitness": 9661.975,
+      "worst_fitness": 10170.5,
+      "elapsed_seconds": 14.200672582956031
+    },
+    {
+      "generation": 102,
+      "best_fitness": 9656.5,
+      "avg_fitness": 9682.815,
+      "worst_fitness": 11176.5,
+      "elapsed_seconds": 14.338175041018985
+    },
+    {
+      "generation": 103,
+      "best_fitness": 9650.5,
+      "avg_fitness": 9688.72,
+      "worst_fitness": 10664.5,
+      "elapsed_seconds": 14.477139165974222
+    },
+    {
+      "generation": 104,
+      "best_fitness": 9624.5,
+      "avg_fitness": 9708.725,
+      "worst_fitness": 11697.0,
+      "elapsed_seconds": 14.617579124984331
+    },
+    {
+      "generation": 105,
+      "best_fitness": 9624.5,
+      "avg_fitness": 9655.505,
+      "worst_fitness": 9697.0,
+      "elapsed_seconds": 14.758469499996863
+    },
+    {
+      "generation": 106,
+      "best_fitness": 9624.5,
+      "avg_fitness": 9679.785,
+      "worst_fitness": 10666.5,
+      "elapsed_seconds": 14.898077082936652
+    },
+    {
+      "generation": 107,
+      "best_fitness": 9618.5,
+      "avg_fitness": 9653.14,
+      "worst_fitness": 10690.5,
+      "elapsed_seconds": 15.038204874959774
+    },
+    {
+      "generation": 108,
+      "best_fitness": 9618.5,
+      "avg_fitness": 9632.925,
+      "worst_fitness": 10124.5,
+      "elapsed_seconds": 15.179406457929872
+    },
+    {
+      "generation": 109,
+      "best_fitness": 9618.5,
+      "avg_fitness": 9658.79,
+      "worst_fitness": 11236.5,
+      "elapsed_seconds": 15.319760540965945
+    },
+    {
+      "generation": 110,
+      "best_fitness": 9616.5,
+      "avg_fitness": 9662.015,
+      "worst_fitness": 10627.0,
+      "elapsed_seconds": 15.460122540942393
+    },
+    {
+      "generation": 111,
+      "best_fitness": 9616.5,
+      "avg_fitness": 9662.33,
+      "worst_fitness": 10818.5,
+      "elapsed_seconds": 15.602863624924794
+    },
+    {
+      "generation": 112,
+      "best_fitness": 9611.5,
+      "avg_fitness": 9650.09,
+      "worst_fitness": 10620.5,
+      "elapsed_seconds": 15.743930957978591
+    },
+    {
+      "generation": 113,
+      "best_fitness": 9611.5,
+      "avg_fitness": 9628.6,
+      "worst_fitness": 10616.5,
+      "elapsed_seconds": 15.884862790931948
+    },
+    {
+      "generation": 114,
+      "best_fitness": 9611.5,
+      "avg_fitness": 9676.97,
+      "worst_fitness": 12616.5,
+      "elapsed_seconds": 16.022464915993623
+    },
+    {
+      "generation": 115,
+      "best_fitness": 9611.5,
+      "avg_fitness": 9671.015,
+      "worst_fitness": 10630.5,
+      "elapsed_seconds": 16.160444582928903
+    },
+    {
+      "generation": 116,
+      "best_fitness": 9611.5,
+      "avg_fitness": 9663.885,
+      "worst_fitness": 10635.5,
+      "elapsed_seconds": 16.297290374990553
+    },
+    {
+      "generation": 117,
+      "best_fitness": 9611.5,
+      "avg_fitness": 9622.505,
+      "worst_fitness": 10612.0,
+      "elapsed_seconds": 16.43655070802197
+    },
+    {
+      "generation": 118,
+      "best_fitness": 9605.5,
+      "avg_fitness": 9707.355,
+      "worst_fitness": 11111.5,
+      "elapsed_seconds": 16.573883957928047
+    },
+    {
+      "generation": 119,
+      "best_fitness": 9605.5,
+      "avg_fitness": 9626.75,
+      "worst_fitness": 10611.5,
+      "elapsed_seconds": 16.711896207998507
+    },
+    {
+      "generation": 120,
+      "best_fitness": 9605.5,
+      "avg_fitness": 9641.085,
+      "worst_fitness": 10619.5,
+      "elapsed_seconds": 16.850344875012524
+    },
+    {
+      "generation": 121,
+      "best_fitness": 9605.5,
+      "avg_fitness": 9651.555,
+      "worst_fitness": 10616.5,
+      "elapsed_seconds": 16.990328249987215
+    },
+    {
+      "generation": 122,
+      "best_fitness": 9601.5,
+      "avg_fitness": 9678.14,
+      "worst_fitness": 11609.5,
+      "elapsed_seconds": 17.127852833014913
+    },
+    {
+      "generation": 123,
+      "best_fitness": 9601.5,
+      "avg_fitness": 9626.75,
+      "worst_fitness": 10645.5,
+      "elapsed_seconds": 17.26758633297868
+    },
+    {
+      "generation": 124,
+      "best_fitness": 9601.5,
+      "avg_fitness": 9638.475,
+      "worst_fitness": 11609.5,
+      "elapsed_seconds": 17.405416707973927
+    },
+    {
+      "generation": 125,
+      "best_fitness": 9601.5,
+      "avg_fitness": 9670.43,
+      "worst_fitness": 11606.5,
+      "elapsed_seconds": 17.544766457984224
+    },
+    {
+      "generation": 126,
+      "best_fitness": 9600.5,
+      "avg_fitness": 9659.605,
+      "worst_fitness": 10605.5,
+      "elapsed_seconds": 17.683858749922365
+    },
+    {
+      "generation": 127,
+      "best_fitness": 9600.5,
+      "avg_fitness": 9659.07,
+      "worst_fitness": 11605.5,
+      "elapsed_seconds": 17.82401491596829
+    },
+    {
+      "generation": 128,
+      "best_fitness": 9600.5,
+      "avg_fitness": 9629.125,
+      "worst_fitness": 10648.5,
+      "elapsed_seconds": 17.963738541002385
+    },
+    {
+      "generation": 129,
+      "best_fitness": 9600.5,
+      "avg_fitness": 9664.015,
+      "worst_fitness": 11611.5,
+      "elapsed_seconds": 18.10352641600184
+    },
+    {
+      "generation": 130,
+      "best_fitness": 9600.5,
+      "avg_fitness": 9631.545,
+      "worst_fitness": 10602.5,
+      "elapsed_seconds": 18.24255850003101
+    },
+    {
+      "generation": 131,
+      "best_fitness": 9600.5,
+      "avg_fitness": 9631.77,
+      "worst_fitness": 10609.5,
+      "elapsed_seconds": 18.38188437500503
+    },
+    {
+      "generation": 132,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9632.825,
+      "worst_fitness": 10808.5,
+      "elapsed_seconds": 18.521560707944445
+    },
+    {
+      "generation": 133,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9610.95,
+      "worst_fitness": 10600.5,
+      "elapsed_seconds": 18.66230954101775
+    },
+    {
+      "generation": 134,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9675.75,
+      "worst_fitness": 11604.5,
+      "elapsed_seconds": 18.801300875027664
+    },
+    {
+      "generation": 135,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9611.61,
+      "worst_fitness": 10594.5,
+      "elapsed_seconds": 18.941572415991686
+    },
+    {
+      "generation": 136,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9652.55,
+      "worst_fitness": 10770.5,
+      "elapsed_seconds": 19.081697250017896
+    },
+    {
+      "generation": 137,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9616.625,
+      "worst_fitness": 10604.5,
+      "elapsed_seconds": 19.222575500025414
+    },
+    {
+      "generation": 138,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9637.65,
+      "worst_fitness": 10800.5,
+      "elapsed_seconds": 19.361172750010155
+    },
+    {
+      "generation": 139,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9662.59,
+      "worst_fitness": 11598.5,
+      "elapsed_seconds": 19.5013720409479
+    },
+    {
+      "generation": 140,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9605.72,
+      "worst_fitness": 10604.5,
+      "elapsed_seconds": 19.639974082936533
+    },
+    {
+      "generation": 141,
+      "best_fitness": 9594.5,
+      "avg_fitness": 9624.9,
+      "worst_fitness": 10594.5,
+      "elapsed_seconds": 19.780246582929976
+    },
+    {
+      "generation": 142,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9633.21,
+      "worst_fitness": 10634.5,
+      "elapsed_seconds": 19.919799832976423
+    },
+    {
+      "generation": 143,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9602.96,
+      "worst_fitness": 10600.5,
+      "elapsed_seconds": 20.05948491592426
+    },
+    {
+      "generation": 144,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9579.0,
+      "worst_fitness": 10598.5,
+      "elapsed_seconds": 20.198830457986332
+    },
+    {
+      "generation": 145,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9526.405,
+      "worst_fitness": 10597.5,
+      "elapsed_seconds": 20.3396829579724
+    },
+    {
+      "generation": 146,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9435.39,
+      "worst_fitness": 11612.5,
+      "elapsed_seconds": 20.480745082953945
+    },
+    {
+      "generation": 147,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9441.41,
+      "worst_fitness": 10893.5,
+      "elapsed_seconds": 20.62124754092656
+    },
+    {
+      "generation": 148,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9433.45,
+      "worst_fitness": 10398.5,
+      "elapsed_seconds": 20.761076999944635
+    },
+    {
+      "generation": 149,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9445.64,
+      "worst_fitness": 11398.5,
+      "elapsed_seconds": 20.90160045796074
+    },
+    {
+      "generation": 150,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9435.08,
+      "worst_fitness": 10418.5,
+      "elapsed_seconds": 21.04163270792924
+    },
+    {
+      "generation": 151,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9430.14,
+      "worst_fitness": 10894.5,
+      "elapsed_seconds": 21.183361541014165
+    },
+    {
+      "generation": 152,
+      "best_fitness": 9394.5,
+      "avg_fitness": 9405.8,
+      "worst_fitness": 10418.5,
+      "elapsed_seconds": 21.323651707964018
+    },
+    {
+      "generation": 153,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9435.835,
+      "worst_fitness": 10426.5,
+      "elapsed_seconds": 21.464334332966246
+    },
+    {
+      "generation": 154,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9475.035,
+      "worst_fitness": 11404.5,
+      "elapsed_seconds": 21.60421383299399
+    },
+    {
+      "generation": 155,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9414.68,
+      "worst_fitness": 10394.5,
+      "elapsed_seconds": 21.74294220795855
+    },
+    {
+      "generation": 156,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9429.97,
+      "worst_fitness": 10404.5,
+      "elapsed_seconds": 21.880752624943852
+    },
+    {
+      "generation": 157,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9446.45,
+      "worst_fitness": 11409.5,
+      "elapsed_seconds": 22.02257883292623
+    },
+    {
+      "generation": 158,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9451.765,
+      "worst_fitness": 10433.5,
+      "elapsed_seconds": 22.162189416005276
+    },
+    {
+      "generation": 159,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9435.13,
+      "worst_fitness": 10433.5,
+      "elapsed_seconds": 22.30337174993474
+    },
+    {
+      "generation": 160,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9413.73,
+      "worst_fitness": 10397.5,
+      "elapsed_seconds": 22.444344707997516
+    },
+    {
+      "generation": 161,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9436.305,
+      "worst_fitness": 10407.0,
+      "elapsed_seconds": 22.58461525000166
+    },
+    {
+      "generation": 162,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9441.59,
+      "worst_fitness": 10938.5,
+      "elapsed_seconds": 22.726000541006215
+    },
+    {
+      "generation": 163,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9438.025,
+      "worst_fitness": 10397.5,
+      "elapsed_seconds": 22.86562483292073
+    },
+    {
+      "generation": 164,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9453.41,
+      "worst_fitness": 11409.5,
+      "elapsed_seconds": 23.005928625003435
+    },
+    {
+      "generation": 165,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9447.48,
+      "worst_fitness": 10561.5,
+      "elapsed_seconds": 23.148194624925964
+    },
+    {
+      "generation": 166,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9414.3,
+      "worst_fitness": 10404.5,
+      "elapsed_seconds": 23.288417082978413
+    },
+    {
+      "generation": 167,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9404.34,
+      "worst_fitness": 10403.5,
+      "elapsed_seconds": 23.42880408302881
+    },
+    {
+      "generation": 168,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9424.36,
+      "worst_fitness": 10433.5,
+      "elapsed_seconds": 23.56865608296357
+    },
+    {
+      "generation": 169,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9438.23,
+      "worst_fitness": 10433.5,
+      "elapsed_seconds": 23.710599625017494
+    },
+    {
+      "generation": 170,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9422.915,
+      "worst_fitness": 10398.5,
+      "elapsed_seconds": 23.853364625014365
+    },
+    {
+      "generation": 171,
+      "best_fitness": 9393.5,
+      "avg_fitness": 9431.04,
+      "worst_fitness": 10393.5,
+      "elapsed_seconds": 23.99672108294908
+    },
+    {
+      "generation": 172,
+      "best_fitness": 9196.5,
+      "avg_fitness": 9455.83,
+      "worst_fitness": 11393.5,
+      "elapsed_seconds": 24.13791874994058
+    },
+    {
+      "generation": 173,
+      "best_fitness": 9196.5,
+      "avg_fitness": 9521.05,
+      "worst_fitness": 11417.5,
+      "elapsed_seconds": 24.27889774995856
+    },
+    {
+      "generation": 174,
+      "best_fitness": 9196.5,
+      "avg_fitness": 9431.6,
+      "worst_fitness": 11394.5,
+      "elapsed_seconds": 24.420412582927383
+    },
+    {
+      "generation": 175,
+      "best_fitness": 9196.5,
+      "avg_fitness": 9341.555,
+      "worst_fitness": 10400.5,
+      "elapsed_seconds": 24.560487458016723
+    },
+    {
+      "generation": 176,
+      "best_fitness": 9196.5,
+      "avg_fitness": 9278.19,
+      "worst_fitness": 11204.5,
+      "elapsed_seconds": 24.703244791016914
+    },
+    {
+      "generation": 177,
+      "best_fitness": 9196.5,
+      "avg_fitness": 9217.325,
+      "worst_fitness": 10228.5,
+      "elapsed_seconds": 24.844739415915683
+    },
+    {
+      "generation": 178,
+      "best_fitness": 9196.5,
+      "avg_fitness": 9209.085,
+      "worst_fitness": 10196.5,
+      "elapsed_seconds": 24.986713915946893
+    },
+    {
+      "generation": 179,
+      "best_fitness": 9193.5,
+      "avg_fitness": 9237.995,
+      "worst_fitness": 10396.5,
+      "elapsed_seconds": 25.127167999977246
+    },
+    {
+      "generation": 180,
+      "best_fitness": 9193.5,
+      "avg_fitness": 9235.925,
+      "worst_fitness": 10196.5,
+      "elapsed_seconds": 25.269236790947616
+    },
+    {
+      "generation": 181,
+      "best_fitness": 9193.5,
+      "avg_fitness": 9248.47,
+      "worst_fitness": 11197.5,
+      "elapsed_seconds": 25.410607915953733
+    },
+    {
+      "generation": 182,
+      "best_fitness": 9193.5,
+      "avg_fitness": 9215.91,
+      "worst_fitness": 10196.5,
+      "elapsed_seconds": 25.553188999998383
+    },
+    {
+      "generation": 183,
+      "best_fitness": 8972.5,
+      "avg_fitness": 9212.87,
+      "worst_fitness": 10200.5,
+      "elapsed_seconds": 25.69562558294274
+    },
+    {
+      "generation": 184,
+      "best_fitness": 8969.5,
+      "avg_fitness": 9190.48,
+      "worst_fitness": 10401.5,
+      "elapsed_seconds": 25.836572416010313
+    },
+    {
+      "generation": 185,
+      "best_fitness": 8969.5,
+      "avg_fitness": 9215.97,
+      "worst_fitness": 11193.5,
+      "elapsed_seconds": 25.979889790993184
+    },
+    {
+      "generation": 186,
+      "best_fitness": 8969.5,
+      "avg_fitness": 9156.08,
+      "worst_fitness": 10234.0,
+      "elapsed_seconds": 26.122624165960588
+    },
+    {
+      "generation": 187,
+      "best_fitness": 8969.5,
+      "avg_fitness": 9094.325,
+      "worst_fitness": 11993.5,
+      "elapsed_seconds": 26.265094249974936
+    },
+    {
+      "generation": 188,
+      "best_fitness": 8969.5,
+      "avg_fitness": 9002.07,
+      "worst_fitness": 10005.5,
+      "elapsed_seconds": 26.409610165981576
+    },
+    {
+      "generation": 189,
+      "best_fitness": 8969.5,
+      "avg_fitness": 9012.47,
+      "worst_fitness": 9994.0,
+      "elapsed_seconds": 26.553525540977716
+    },
+    {
+      "generation": 190,
+      "best_fitness": 8961.5,
+      "avg_fitness": 9012.715,
+      "worst_fitness": 9975.5,
+      "elapsed_seconds": 26.69665354094468
+    },
+    {
+      "generation": 191,
+      "best_fitness": 8961.5,
+      "avg_fitness": 9000.11,
+      "worst_fitness": 9981.5,
+      "elapsed_seconds": 26.840487624984235
+    },
+    {
+      "generation": 192,
+      "best_fitness": 8961.5,
+      "avg_fitness": 9015.63,
+      "worst_fitness": 9973.5,
+      "elapsed_seconds": 26.98184904095251
+    },
+    {
+      "generation": 193,
+      "best_fitness": 8961.5,
+      "avg_fitness": 8999.96,
+      "worst_fitness": 10670.0,
+      "elapsed_seconds": 27.126229458022863
+    },
+    {
+      "generation": 194,
+      "best_fitness": 8960.5,
+      "avg_fitness": 9000.78,
+      "worst_fitness": 9969.5,
+      "elapsed_seconds": 27.26763649994973
+    },
+    {
+      "generation": 195,
+      "best_fitness": 8960.5,
+      "avg_fitness": 9009.025,
+      "worst_fitness": 10970.5,
+      "elapsed_seconds": 27.410320665920153
+    },
+    {
+      "generation": 196,
+      "best_fitness": 8960.5,
+      "avg_fitness": 9014.88,
+      "worst_fitness": 11158.5,
+      "elapsed_seconds": 27.550102540990338
+    },
+    {
+      "generation": 197,
+      "best_fitness": 8960.5,
+      "avg_fitness": 8987.75,
+      "worst_fitness": 11189.5,
+      "elapsed_seconds": 27.689563666004688
+    },
+    {
+      "generation": 198,
+      "best_fitness": 8960.5,
+      "avg_fitness": 8992.065,
+      "worst_fitness": 10001.0,
+      "elapsed_seconds": 27.828489249921404
+    },
+    {
+      "generation": 199,
+      "best_fitness": 8960.5,
+      "avg_fitness": 9025.925,
+      "worst_fitness": 11461.5,
+      "elapsed_seconds": 27.9690305829281
+    }
+  ]
+}

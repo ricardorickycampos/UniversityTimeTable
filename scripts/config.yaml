@@ -1,0 +1,40 @@
+# Configuration file for the GA-based sectioning algorithm.
+
+data:
+  input_path: data/data.xml
+  subset: 100 # Max 896 classes, set null for full dataset.
+
+student_sectioning:
+  sample_size: 500 # Max 30,846 students, set null for full dataset.
+
+ga:
+  population_size: 100
+  n_generations: 500
+  crossover_rate: 0.7
+  mutation_rate: 0.002
+  tournament_size: 3
+  elitism_count: 2
+  random_seed: 42
+
+phase2:
+  ga:
+    population_size: 15
+    n_generations: 50
+    crossover_rate: 0.7
+    mutation_rate: 0.001
+    tournament_size: 3
+    elitism_count: 2
+    random_seed: 42
+
+local_search:
+  enabled: false       # Toggles local search on/off
+  top_k: 2                 # how many top individuals to polish per gen
+  max_passes: 1            # bound on hill-climb iterations
+  apply_every_n_gens: 5000     # apply every N generations to save time
+
+fitness:
+  hard_weight: 1000.0
+
+output:
+  results_dir: results
+  outputs_dir: outputs

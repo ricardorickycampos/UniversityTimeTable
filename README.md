@@ -2,8 +2,39 @@
   <h1>UniversityTimeTable</h1>
 </div>
 
-This project is to come up with a solve the University Course TimeTabling Problem (UCTP) by designing a system capable of scheduling 10,000+ Students and 500+ Courses within Kennesaw State University. 
-This is a collaborative effort for the Course CS 4306 - Algorithm Analysis 
+## Introduction
+This project is to come up with a solve the University Course TimeTabling Problem (UCTP) by designing a system capable of scheduling 10,000+ Students and 500+ Courses within Kennesaw State University.
+This is a collaborative effort for the Course CS 4306 - Algorithm Analysis
+## Usage
+Requirements:
+- Python 3.10+
+### Install requirements
+```bash
+pip install -r requirements.txt
+```
+### Set up:
+Before running the project, making changes in config.yaml file found in scripts/config.yaml
+Algorithm takes them as parameters at runtime.
+
+### How to run:
+There are 2 different ways to run the project.
+The first is doing the phases one at a time.<br>
+Phase 1: Populates the Rooms and Courses data structures.<br>
+Phase 2: Populates the Students data structure using the Rooms and Courses data structures from Phase 1.
+
+ ```bash
+    python3 main.py phase1 --config scripts/config.yaml
+    python3 main.py phase2 --config scripts/config.yaml --genome results/(genome_file_name).npy
+ ```
+ NOTE: the --genome argument is optional, and will default to the last best genome found in the results/ folder.
+
+ Second is all in one go.
+
+ ```bash
+    python3 main.py all --config scripts/config.yaml
+```
+### Results
+After running the output will be saved to results/ folder.
 
 ## Goal 
 
