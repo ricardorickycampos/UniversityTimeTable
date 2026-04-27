@@ -94,7 +94,7 @@ Phase 2: Populates the Students data structure using the Rooms and Courses data 
 ```
 
 ### Results
-After running the output will be saved to results/ folder.
+After running, the output will be saved to the results/ folder.
 
 
 ## *Resources*
