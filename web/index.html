@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UCTP Solver — KSU CS 4306</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────────────────────────── -->
+<header class="header">
+  <div class="header-left">
+    <div class="ksu-badge">KSU</div>
+    <div>
+      <div class="header-title">UCTP Solver</div>
+      <div class="header-sub">CS 4306 · Algorithm Analysis · Spring 2026 · Genetic Algorithm</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span id="mode-badge" class="badge badge-static">⬤ Static mode</span>
+    <select id="run-select" class="run-select" title="Select a saved run"></select>
+    <button id="btn-quick" class="btn btn-primary" onclick="App.startRun('quick')" style="display:none">⚡ Quick demo</button>
+    <button id="btn-full"  class="btn btn-secondary" onclick="App.startRun('all')"  style="display:none">▶ Full run</button>
+  </div>
+</header>
+
+<!-- ── Tab bar ────────────────────────────────────────────────────────────── -->
+<nav class="tabbar">
+  <button class="tab-btn active" data-tab="schedule"  onclick="App.switchTab('schedule')">Schedule</button>
+  <button class="tab-btn"        data-tab="data"      onclick="App.switchTab('data')">Data Setup</button>
+  <button class="tab-btn"        data-tab="algorithm" onclick="App.switchTab('algorithm')">Algorithm</button>
+  <button class="tab-btn"        data-tab="analytics" onclick="App.switchTab('analytics')">Analytics</button>
+  <button class="tab-btn"        data-tab="results"   onclick="App.switchTab('results')">Results Browser</button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- SCHEDULE TAB                                                               -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-schedule" class="tab-panel active">
+
+  <!-- Metric cards -->
+  <div class="cards">
+    <div class="card card-blue">
+      <div class="card-label">Classes scheduled</div>
+      <div class="card-value" id="s-classes">—</div>
+      <div class="card-sub"  id="s-classes-sub"></div>
+    </div>
+    <div class="card card-green">
+      <div class="card-label">Hard violations</div>
+      <div class="card-value" id="s-hard">—</div>
+      <div class="card-sub"  id="s-hard-sub"></div>
+    </div>
+    <div class="card card-amber">
+      <div class="card-label">Soft penalty</div>
+      <div class="card-value" id="s-soft">—</div>
+      <div class="card-sub"  id="s-soft-sub"></div>
+    </div>
+    <div class="card card-gray">
+      <div class="card-label">Fitness score</div>
+      <div class="card-value" id="s-fitness">—</div>
+      <div class="card-sub"  id="s-fitness-sub"></div>
+    </div>
+  </div>
+
+  <!-- Hard constraint breakdown -->
+  <div class="section-row" style="margin-bottom:12px;">
+    <div class="constraint-box" id="hard-breakdown">
+      <span class="cb-title">Hard breakdown</span>
+      <span class="cb-item" id="hb-room">Room conflicts: —</span>
+      <span class="cb-item" id="hb-instr">Instructor conflicts: —</span>
+      <span class="cb-item" id="hb-share">Room sharing: —</span>
+      <span class="cb-item" id="hb-group">Group constraints: —</span>
+    </div>
+    <div class="constraint-box" id="soft-breakdown">
+      <span class="cb-title">Soft breakdown</span>
+      <span class="cb-item" id="sb-pref">Preferences: —</span>
+      <span class="cb-item" id="sb-cap">Capacity: —</span>
+      <span class="cb-item" id="sb-work">Workload: —</span>
+      <span class="cb-item" id="sb-group">Group: —</span>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend-bar">
+    <span class="legend-label">Legend</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#EF4444;border:2px solid #EF4444"></span>Room conflict</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#94A3B8"></span>Pinned (1 option)</span>
+    <span class="legend-item"><span style="font-size:10px;">Colors = departments</span></span>
+    <span class="legend-item"><span style="font-size:10px;">✦ = enrollment limit</span></span>
+  </div>
+
+  <!-- Day tabs -->
+  <div class="day-tabs" id="day-tabs"></div>
+
+  <!-- Schedule grid -->
+  <div id="schedule-grid" class="schedule-grid">
+    <div class="schedule-placeholder" id="schedule-placeholder">
+      <div style="font-size:32px;margin-bottom:12px;">📅</div>
+      <div style="font-weight:500;margin-bottom:6px;">No schedule loaded</div>
+      <div style="font-size:12px;color:var(--text-secondary);">
+        Select a run from the dropdown above, or run the export script:<br>
+        <code>python scripts/export_schedule.py</code>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- DATA SETUP TAB                                                             -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-data" class="tab-panel">
+  <div class="section-title">Current dataset</div>
+  <div class="cards" style="margin-bottom:20px;">
+    <div class="card card-blue">
+      <div class="card-label">Classes</div>
+      <div class="card-value" id="d-classes">—</div>
+      <div class="card-sub">course sections</div>
+    </div>
+    <div class="card card-green">
+      <div class="card-label">Rooms</div>
+      <div class="card-value" id="d-rooms">—</div>
+      <div class="card-sub">physical rooms</div>
+    </div>
+    <div class="card card-amber">
+      <div class="card-label">Students</div>
+      <div class="card-value" id="d-students">—</div>
+      <div class="card-sub">enrollment requests</div>
+    </div>
+    <div class="card card-gray">
+      <div class="card-label">Group constraints</div>
+      <div class="card-value" id="d-gcs">—</div>
+      <div class="card-sub">scheduling rules</div>
+    </div>
+  </div>
+
+  <!-- CSV Upload -->
+  <div class="section-title">Upload CSV dataset <span class="badge badge-live" id="csv-live-badge" style="display:none">Live mode only</span></div>
+  <p class="section-desc">Upload the four required CSV files from the assignment spec. The system converts them to UniTime XML format for the solver.</p>
+
+  <div class="csv-grid">
+    <div class="csv-card" id="csv-rooms">
+      <div class="csv-card-header">
+        <span class="csv-filename">rooms.csv</span>
+        <span class="csv-status" id="status-rooms">Not loaded</span>
+      </div>
+      <div class="csv-schema">room_id · capacity · is_lab · building</div>
+      <input type="file" accept=".csv" id="file-rooms" onchange="App.csvFileSelected('rooms',this)">
+    </div>
+    <div class="csv-card" id="csv-timeslots">
+      <div class="csv-card-header">
+        <span class="csv-filename">timeslots.csv</span>
+        <span class="csv-status" id="status-timeslots">Not loaded</span>
+      </div>
+      <div class="csv-schema">slot_id · day · start_time · duration_min</div>
+      <input type="file" accept=".csv" id="file-timeslots" onchange="App.csvFileSelected('timeslots',this)">
+    </div>
+    <div class="csv-card" id="csv-sections">
+      <div class="csv-card-header">
+        <span class="csv-filename">sections.csv</span>
+        <span class="csv-status" id="status-sections">Not loaded</span>
+      </div>
+      <div class="csv-schema">section_id · course_id · enrollment · instructor_id · needs_lab · cohort_id · building_pref</div>
+      <input type="file" accept=".csv" id="file-sections" onchange="App.csvFileSelected('sections',this)">
+    </div>
+    <div class="csv-card" id="csv-instructors">
+      <div class="csv-card-header">
+        <span class="csv-filename">instructors.csv</span>
+        <span class="csv-status" id="status-instructors">Not loaded</span>
+      </div>
+      <div class="csv-schema">instructor_id · domains · unavailable_slots · required_no_teach_slots · preferred_slots</div>
+      <input type="file" accept=".csv" id="file-instructors" onchange="App.csvFileSelected('instructors',this)">
+    </div>
+  </div>
+
+  <div class="csv-card csv-optional" id="csv-distances" style="margin-top:10px;max-width:460px;">
+    <div class="csv-card-header">
+      <span class="csv-filename">distances.csv <span style="opacity:.6;font-size:10px;">(optional)</span></span>
+      <span class="csv-status" id="status-distances">Not loaded</span>
+    </div>
+    <div class="csv-schema">from_bld · to_bld · walk_min</div>
+    <input type="file" accept=".csv" id="file-distances" onchange="App.csvFileSelected('distances',this)">
+  </div>
+
+  <div style="margin-top:14px;display:flex;gap:10px;align-items:center;">
+    <button class="btn btn-primary" id="btn-upload-csv" onclick="App.uploadCSVs()" disabled>Convert & upload CSVs →</button>
+    <span id="csv-upload-msg" style="font-size:12px;color:var(--text-secondary);"></span>
+  </div>
+
+  <div class="info-box" style="margin-top:20px;">
+    <strong>Note:</strong> CSV upload converts to UniTime XML format compatible with the solver.
+    After uploading, update <code>data.input_path</code> in <code>scripts/config.yaml</code> to
+    <code>data/uploaded_data.xml</code> before running.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- ALGORITHM TAB                                                              -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-algorithm" class="tab-panel">
+  <div class="algo-grid">
+
+    <!-- Phase 1 GA config -->
+    <div class="algo-section">
+      <div class="section-title">Phase 1 — Course scheduling GA</div>
+      <div class="param-row">
+        <span class="param-label">Population size</span>
+        <input type="range" min="20" max="300" value="100" step="10"
+               oninput="document.getElementById('v-p1-pop').textContent=this.value" id="sl-p1-pop">
+        <span class="param-val" id="v-p1-pop">100</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Generations</span>
+        <input type="range" min="50" max="2000" value="500" step="50"
+               oninput="document.getElementById('v-p1-gen').textContent=this.value" id="sl-p1-gen">
+        <span class="param-val" id="v-p1-gen">500</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Crossover rate</span>
+        <input type="range" min="0" max="100" value="70"
+               oninput="document.getElementById('v-p1-cx').textContent=(this.value/100).toFixed(2)" id="sl-p1-cx">
+        <span class="param-val" id="v-p1-cx">0.70</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Mutation rate</span>
+        <input type="range" min="0" max="30" value="2"
+               oninput="document.getElementById('v-p1-mt').textContent=(this.value/1000).toFixed(3)" id="sl-p1-mt">
+        <span class="param-val" id="v-p1-mt">0.002</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Tournament size</span>
+        <input type="range" min="2" max="10" value="3"
+               oninput="document.getElementById('v-p1-ts').textContent=this.value" id="sl-p1-ts">
+        <span class="param-val" id="v-p1-ts">3</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Elitism count</span>
+        <input type="range" min="1" max="10" value="2"
+               oninput="document.getElementById('v-p1-el').textContent=this.value" id="sl-p1-el">
+        <span class="param-val" id="v-p1-el">2</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Hard violation weight</span>
+        <input type="range" min="100" max="5000" value="1000" step="100"
+               oninput="document.getElementById('v-p1-hw').textContent=Number(this.value).toLocaleString()" id="sl-p1-hw">
+        <span class="param-val" id="v-p1-hw">1,000</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Class subset</span>
+        <input type="range" min="10" max="896" value="100" step="10"
+               oninput="document.getElementById('v-p1-sub').textContent=this.value==='896'?'all (896)':this.value" id="sl-p1-sub">
+        <span class="param-val" id="v-p1-sub">100</span>
+      </div>
+    </div>
+
+    <!-- Phase 2 GA config -->
+    <div class="algo-section">
+      <div class="section-title">Phase 2 — Student sectioning GA</div>
+      <div class="param-row">
+        <span class="param-label">Population size</span>
+        <input type="range" min="5" max="100" value="15" step="5"
+               oninput="document.getElementById('v-p2-pop').textContent=this.value" id="sl-p2-pop">
+        <span class="param-val" id="v-p2-pop">15</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Generations</span>
+        <input type="range" min="10" max="300" value="50" step="10"
+               oninput="document.getElementById('v-p2-gen').textContent=this.value" id="sl-p2-gen">
+        <span class="param-val" id="v-p2-gen">50</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Crossover rate</span>
+        <input type="range" min="0" max="100" value="70"
+               oninput="document.getElementById('v-p2-cx').textContent=(this.value/100).toFixed(2)" id="sl-p2-cx">
+        <span class="param-val" id="v-p2-cx">0.70</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Mutation rate</span>
+        <input type="range" min="0" max="20" value="1"
+               oninput="document.getElementById('v-p2-mt').textContent=(this.value/1000).toFixed(3)" id="sl-p2-mt">
+        <span class="param-val" id="v-p2-mt">0.001</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Student sample</span>
+        <input type="range" min="50" max="1000" value="500" step="50"
+               oninput="document.getElementById('v-p2-ss').textContent=this.value" id="sl-p2-ss">
+        <span class="param-val" id="v-p2-ss">500</span>
+      </div>
+      <div class="param-row">
+        <span class="param-label">Random seed</span>
+        <input type="number" value="42" id="inp-seed" style="width:80px;">
+      </div>
+
+      <!-- Run controls -->
+      <div class="run-controls" id="run-controls" style="margin-top:20px;display:none;">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-primary" onclick="App.startRun('quick')">⚡ Quick demo (~20s)</button>
+          <button class="btn btn-secondary" onclick="App.startRun('all')">▶ Full run</button>
+          <button class="btn btn-secondary" onclick="App.startRun('phase1')">Phase 1 only</button>
+          <button class="btn btn-secondary" onclick="App.startRun('phase2')">Phase 2 only</button>
+        </div>
+        <div class="run-log-box" id="run-log" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Config JSON preview -->
+  <div class="section-title" style="margin-top:16px;">config.yaml preview</div>
+  <pre class="config-pre" id="config-preview"># Loading...</pre>
+
+  <!-- Algorithm explanation -->
+  <div class="section-title" style="margin-top:16px;">How the GA works</div>
+  <div class="algo-explain">
+    <div class="explain-step">
+      <div class="step-num">1</div>
+      <div><strong>Chromosome (Phase 1)</strong> — Each individual is an <code>(n_classes × 2)</code> int array.
+      Column 0 = chosen room index, Column 1 = chosen time index, both into each class's own candidate list from the XML.</div>
+    </div>
+    <div class="explain-step">
+      <div class="step-num">2</div>
+      <div><strong>Fitness</strong> — <code>fitness = hard_weight × hard_violations + soft_penalties</code>.
+      Hard violations (room conflicts, instructor double-booking, room sharing) are penalised ×1000 to make them effectively non-negotiable.</div>
+    </div>
+    <div class="explain-step">
+      <div class="step-num">3</div>
+      <div><strong>Selection</strong> — Tournament selection (k=3). Each round picks 3 random individuals and keeps the one with the lowest fitness.</div>
+    </div>
+    <div class="explain-step">
+      <div class="step-num">4</div>
+      <div><strong>Crossover</strong> — Uniform crossover: for each class (row), independently inherit from parent A or B with 50/50 probability.</div>
+    </div>
+    <div class="explain-step">
+      <div class="step-num">5</div>
+      <div><strong>Chromosome (Phase 2)</strong> — A permutation of student IDs. The order in which students are greedily assigned to sections determines who gets their preferred section first.</div>
+    </div>
+    <div class="explain-step">
+      <div class="step-num">6</div>
+      <div><strong>Phase 2 Crossover</strong> — Order Crossover (OX): copies a contiguous segment from parent A, fills the rest from parent B in order. Required for valid permutations.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- ANALYTICS TAB                                                              -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-analytics" class="tab-panel">
+  <div class="analytics-grid">
+
+    <!-- Phase 1 convergence chart -->
+    <div class="chart-card chart-wide">
+      <div class="chart-title">Phase 1 — GA convergence (fitness vs generation)</div>
+      <div class="chart-sub" id="p1-chart-sub">No data loaded</div>
+      <div class="chart-wrap"><canvas id="chart-p1"></canvas></div>
+    </div>
+
+    <!-- Phase 2 convergence chart -->
+    <div class="chart-card chart-wide">
+      <div class="chart-title">Phase 2 — Student sectioning GA convergence</div>
+      <div class="chart-sub" id="p2-chart-sub">No data loaded</div>
+      <div class="chart-wrap"><canvas id="chart-p2"></canvas></div>
+    </div>
+
+    <!-- Phase 2 stats cards -->
+    <div class="card card-green">
+      <div class="card-label">Students processed</div>
+      <div class="card-value" id="a-students">—</div>
+      <div class="card-sub" id="a-students-sub"></div>
+    </div>
+    <div class="card card-blue">
+      <div class="card-label">Coverage</div>
+      <div class="card-value" id="a-coverage">—</div>
+      <div class="card-sub" id="a-coverage-sub">enrollments placed</div>
+    </div>
+    <div class="card card-amber">
+      <div class="card-label">Skipped enrollments</div>
+      <div class="card-value" id="a-skipped">—</div>
+      <div class="card-sub" id="a-skipped-sub"></div>
+    </div>
+    <div class="card card-gray">
+      <div class="card-label">Phase 2 fitness</div>
+      <div class="card-value" id="a-p2fit">—</div>
+      <div class="card-sub">lower = better</div>
+    </div>
+
+  </div>
+
+  <!-- Feasibility report -->
+  <div class="section-title" style="margin-top:16px;">Feasibility report</div>
+  <div class="feasibility-table">
+    <div class="feas-row" id="fr-overlap">
+      <span>Non-overlap — no room double-booking</span><span class="feas-val">—</span>
+    </div>
+    <div class="feas-row" id="fr-instr">
+      <span>Instructor non-overlap</span><span class="feas-val">—</span>
+    </div>
+    <div class="feas-row" id="fr-share">
+      <span>Room sharing constraints</span><span class="feas-val">—</span>
+    </div>
+    <div class="feas-row" id="fr-group">
+      <span>Group constraints (P-pref)</span><span class="feas-val">—</span>
+    </div>
+    <div class="feas-row feas-total" id="fr-total">
+      <span>Overall feasibility</span><span class="feas-val" id="fr-total-val">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- RESULTS BROWSER TAB                                                        -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-results" class="tab-panel">
+  <div class="section-title">Saved Phase 1 runs</div>
+  <div id="p1-runs-list" class="runs-list"></div>
+
+  <div class="section-title" style="margin-top:20px;">Saved Phase 2 runs</div>
+  <div id="p2-runs-list" class="runs-list"></div>
+
+  <div class="info-box" style="margin-top:16px;">
+    <strong>Static mode:</strong> Showing pre-committed result files from <code>web/results/</code>.
+    In live mode (Flask backend), new runs appear here automatically after each solve.
+    Run <code>python scripts/export_schedule.py</code> to generate timetable grids for all saved runs.
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
