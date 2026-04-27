@@ -103,12 +103,14 @@ After running, the output will be saved to the results/ folder.
 timetabling problem. Intelligent Systems with Applications, 19, p.200253.
 
 ## *Authors*
-- Cesar Arevalo Colocho – [GitHub](https://github.com/colochoo)
-- Ricardo Campos - [Github](https://github.com/ricardorickycampos)
-- Braden Mizell - [missing info]
-- Evan Banks - [Github](https://github.com/ebanks28)
-- Alice Johnson - [missing info]
-- David Odumade - [missing info]
+| Name | Role | GitHub |
+|:----:|:----:|:------:|
+| Cesar Arevalo Colocho | UI Designer | https://github.com/colochoo |
+| Ricardo Campos | Algorithm Implementer | https://github.com/ricardorickycampos |
+| Braden Mizell | Documentation Writer | [missing info] |
+| Evan Banks | Documentation Formatter | https://github.com/ebanks28 |
+| Alice Johnson | Documentation Writer | [missing info] |
+| David Odumade | Algorithm Designer | [missing info] |
 
 ---
 
