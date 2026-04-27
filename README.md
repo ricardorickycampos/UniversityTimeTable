@@ -5,7 +5,7 @@
 This project aims to solve the University Course Timetabling Problem (UCTP) by designing a system capable of scheduling over 10,000 students and 500 courses at Kennesaw State University.
 
 This is a collaborative effort for the Course CS 4306 - Algorithm Analysis
-> Live demo website [_here_](https://www.example.com)
+> Live demo website [_here_]([https://www.example.com](https://ricardorickycampos.github.io/UniversityTimeTable/))
 
 ## *Table of Contents*
 * [General Info](#general-information)
