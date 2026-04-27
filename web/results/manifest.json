@@ -1,0 +1,12 @@
+{
+  "phase1": [
+    "phase1_6000_best.json"
+  ],
+  "phase2_logs": [
+    "phase2_full_log.json"
+  ],
+  "phase2_assignments": [
+    "phase2_full_assignment.json"
+  ],
+  "schedules": []
+}
