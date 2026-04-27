@@ -73,6 +73,10 @@ const App = {
     const mode = await detectMode();
     State.mode = mode;
 
+    // Sync theme button icon with current theme
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    el('theme-toggle').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+
     // Update mode badge
     const badge = el('mode-badge');
     if (mode === 'live') {
@@ -191,6 +195,19 @@ const App = {
         }
       } catch (_) {}
     }
+  },
+
+  // ── Theme toggle ──────────────────────────────────────────────────────────
+  toggleTheme() {
+    const html    = document.documentElement;
+    const current = html.getAttribute('data-theme') || 'light';
+    const next    = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('uctp-theme', next);
+    el('theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
+    // Re-render charts so their axis/grid colors update
+    if (State.currentP1Log) App.renderP1Chart(State.currentP1Log);
+    if (State.currentP2Log) App.renderP2Chart(State.currentP2Log);
   },
 
   // ── Tab switching ─────────────────────────────────────────────────────────

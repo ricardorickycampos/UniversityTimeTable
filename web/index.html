@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UCTP Solver — KSU CS 4306</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Set theme before page renders to prevent flash of wrong theme -->
+  <script>
+    (function () {
+      const saved  = localStorage.getItem('uctp-theme');
+      const prefer = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', saved || prefer);
+    })();
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
 <body>
@@ -19,6 +27,7 @@
     </div>
   </div>
   <div class="header-right">
+    <button id="theme-toggle" class="btn btn-theme" onclick="App.toggleTheme()" title="Toggle light / dark mode">🌙</button>
     <span id="mode-badge" class="badge badge-static">⬤ Static mode</span>
     <select id="run-select" class="run-select" title="Select a saved run"></select>
     <button id="btn-quick" class="btn btn-primary" onclick="App.startRun('quick')" style="display:none">⚡ Quick demo</button>

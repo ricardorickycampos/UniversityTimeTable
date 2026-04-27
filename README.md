@@ -110,7 +110,7 @@ timetabling problem. Intelligent Systems with Applications, 19, p.200253.
 | Braden Mizell | Documentation Writer | [GitHub](https://github.com/BradenMizell) |
 | Evan Banks | Documentation Formatter | [GitHub](https://github.com/ebanks28) |
 | Alice Johnson | Documentation Writer | [GitHub](https://github.com/BarBabe)|
-| David Odumade | Algorithm Designer | [missing info] |
+| David Odumade | Algorithm Designer |  |
 
 ---
 
