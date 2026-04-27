@@ -105,11 +105,11 @@ timetabling problem. Intelligent Systems with Applications, 19, p.200253.
 ## *Authors*
 | Name | Role | GitHub |
 |:----:|:----:|:------:|
-| Cesar Arevalo Colocho | UI Designer | https://github.com/colochoo |
-| Ricardo Campos | Algorithm Implementer | https://github.com/ricardorickycampos |
-| Braden Mizell | Documentation Writer | [missing info] |
-| Evan Banks | Documentation Formatter | https://github.com/ebanks28 |
-| Alice Johnson | Documentation Writer | [missing info] |
+| Cesar Arevalo Colocho | UI Designer & Backend Developer | [GitHub](https://github.com/colochoo) |
+| Ricardo Campos | Algorithm Implementer | [GitHub](https://github.com/ricardorickycampos) |
+| Braden Mizell | Documentation Writer | [GitHub](https://github.com/BradenMizell) |
+| Evan Banks | Documentation Formatter | [GitHub](https://github.com/ebanks28) |
+| Alice Johnson | Documentation Writer | [GitHub](https://github.com/BarBabe)|
 | David Odumade | Algorithm Designer | [missing info] |
 
 ---
