@@ -4,7 +4,7 @@
 
 ## Introduction
 This project is to come up with a solve the University Course TimeTabling Problem (UCTP) by designing a system capable of scheduling 10,000+ Students and 500+ Courses within Kennesaw State University.
-This is a collaborative effort for the Course CS 4306 - Algorithm Analysis
+This is a collaborative effort for the Course CS 4306 - Algorithm Analysis.
 ## Usage
 Requirements:
 - Python 3.10+
@@ -34,7 +34,7 @@ Phase 2: Populates the Students data structure using the Rooms and Courses data 
     python3 main.py all --config scripts/config.yaml
 ```
 ### Results
-After running the output will be saved to results/ folder.
+After running, the output will be saved to the results/ folder.
 
 ## Goal 
 
