@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UCTP Solver — KSU CS 4306</title>
+
+  <!-- Style Sheet -->
   <link rel="stylesheet" href="style.css">
+
   <!-- Set theme before page renders to prevent flash of wrong theme -->
   <script>
     (function () {
@@ -15,19 +18,22 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 </head>
+
 <body>
 
-<!-- ── Header ─────────────────────────────────────────────────────────────── -->
+<!-- Header ---------------------------------------------------------------------->
 <header class="header">
   <div class="header-left">
     <div class="ksu-badge">KSU</div>
     <div>
-      <div class="header-title">UCTP Solver</div>
-      <div class="header-sub">CS 4306 · Algorithm Analysis · Spring 2026 · Genetic Algorithm</div>
+      <div class="header-title">University Course Timetabling Problem (UCTP) - Solver Program </div>
+      <div class="header-sub">CS 4306 | Algorithm Analysis | Spring 2026 | Genetic Algorithm</div>
+    </div>
+    <div>
+      <button id="theme-toggle" class="btn btn-theme" onclick="App.toggleTheme()" title="Toggle light / dark mode"></button>
     </div>
   </div>
   <div class="header-right">
-    <button id="theme-toggle" class="btn btn-theme" onclick="App.toggleTheme()" title="Toggle light / dark mode">🌙</button>
     <span id="mode-badge" class="badge badge-static">⬤ Static mode</span>
     <select id="run-select" class="run-select" title="Select a saved run"></select>
     <button id="btn-quick" class="btn btn-primary" onclick="App.startRun('quick')" style="display:none">⚡ Quick demo</button>
@@ -35,14 +41,19 @@
   </div>
 </header>
 
-<!-- ── Tab bar ────────────────────────────────────────────────────────────── -->
+
+<!-- Tab Bar ---------------------------------------------------------------------->
 <nav class="tabbar">
   <button class="tab-btn active" data-tab="schedule"  onclick="App.switchTab('schedule')">Schedule</button>
   <button class="tab-btn"        data-tab="data"      onclick="App.switchTab('data')">Data Setup</button>
   <button class="tab-btn"        data-tab="algorithm" onclick="App.switchTab('algorithm')">Algorithm</button>
   <button class="tab-btn"        data-tab="analytics" onclick="App.switchTab('analytics')">Analytics</button>
   <button class="tab-btn"        data-tab="results"   onclick="App.switchTab('results')">Results Browser</button>
+  <span class="tab-btn right">
+    <button class="tab-btn author" data-tab="authors"   onclick="App.switchTab('authors')">Contributors and Project Info</button>
+  </span>
 </nav>
+
 
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
 <!-- SCHEDULE TAB                                                               -->
@@ -89,6 +100,14 @@
       <span class="cb-item" id="sb-work">Workload: —</span>
       <span class="cb-item" id="sb-group">Group: —</span>
     </div>
+  </div>
+
+  <!-- Export bar -->
+  <div class="export-bar">
+    <span class="export-label">Export:</span>
+    <button class="btn btn-sm btn-secondary" id="btn-export-csv"    onclick="App.exportScheduleCSV()"      disabled>↓ schedule.csv</button>
+    <button class="btn btn-sm btn-secondary" id="btn-export-metrics" onclick="App.exportMetricsJSON()"      disabled>↓ metrics.json</button>
+    <button class="btn btn-sm btn-secondary" id="btn-export-report"  onclick="App.exportFeasibilityReport()" disabled>↓ feasibility_report.md</button>
   </div>
 
   <!-- Legend -->
@@ -181,15 +200,6 @@
       <div class="csv-schema">instructor_id · domains · unavailable_slots · required_no_teach_slots · preferred_slots</div>
       <input type="file" accept=".csv" id="file-instructors" onchange="App.csvFileSelected('instructors',this)">
     </div>
-  </div>
-
-  <div class="csv-card csv-optional" id="csv-distances" style="margin-top:10px;max-width:460px;">
-    <div class="csv-card-header">
-      <span class="csv-filename">distances.csv <span style="opacity:.6;font-size:10px;">(optional)</span></span>
-      <span class="csv-status" id="status-distances">Not loaded</span>
-    </div>
-    <div class="csv-schema">from_bld · to_bld · walk_min</div>
-    <input type="file" accept=".csv" id="file-distances" onchange="App.csvFileSelected('distances',this)">
   </div>
 
   <div style="margin-top:14px;display:flex;gap:10px;align-items:center;">
@@ -348,6 +358,100 @@
       <div><strong>Phase 2 Crossover</strong> — Order Crossover (OX): copies a contiguous segment from parent A, fills the rest from parent B in order. Required for valid permutations.</div>
     </div>
   </div>
+
+  <!-- ── Asymptotic Complexity ─────────────────────────────────────────────── -->
+  <div class="section-title" style="margin-top:24px;">Asymptotic Complexity</div>
+  <div class="complexity-section">
+    <div class="complexity-explain">
+      <div class="complexity-formula-box">
+        <div class="formula-title">Naive Search Space</div>
+        <div class="formula-main">O( (|R|·|T|)<sup>n</sup> )</div>
+        <div class="formula-desc">n = classes &nbsp;·&nbsp; |R| = rooms &nbsp;·&nbsp; |T| = timeslots</div>
+      </div>
+      <div class="complexity-steps">
+        <div class="explain-step">
+          <div class="step-num" style="background:var(--red)">!</div>
+          <div><strong>Exponential — naïve search:</strong> Each class picks one of |R|×|T| room-time pairs independently. Total combinations = (|R|×|T|)^n. With 63 rooms × 288 time cells = 18,144 options/class → 18,144^896 ≈ 10<sup>3,559</sup> states. Completely intractable for exact search.</div>
+        </div>
+        <div class="explain-step">
+          <div class="step-num" style="background:var(--amber)">↓</div>
+          <div><strong>Candidate filtering (pruning):</strong> Pre-filter each class to rooms that fit capacity/lab type and times where the instructor is available. Reduces average domain from 18,144 → ~100 options/class, shrinking the search space by many orders of magnitude — but still exponential.</div>
+        </div>
+        <div class="explain-step">
+          <div class="step-num" style="background:var(--green)">✓</div>
+          <div><strong>Genetic Algorithm — polynomial in practice:</strong> Only evaluates P×G fitness calls where P = population size and G = generations. Each evaluation is O(n). Total work ≈ O(P·G·n) — polynomial, not exponential. GA does not guarantee the global optimum but reliably finds high-quality feasible solutions.</div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card" style="margin-top:12px;">
+      <div class="chart-title">Live domain-size stats from loaded run</div>
+      <div class="chart-sub" id="complexity-chart-sub">Load a run to see stats</div>
+      <div id="complexity-live-stats"></div>
+    </div>
+  </div>
+
+  <!-- ── Conflict Graph ────────────────────────────────────────────────────── -->
+  <div class="section-title" style="margin-top:24px;">Conflict Graph &nbsp;<span style="font-weight:400;font-size:11px;color:var(--text-secondary)">G = (V, E)</span></div>
+  <p class="section-desc" style="margin-bottom:10px;">Each node V is a course section. An edge (u,v)∈E means sections u and v share an instructor and therefore cannot occupy the same timeslot. The graph drives <strong>DSATUR ordering</strong> — the most-constrained sections are scheduled first to avoid infeasibility.</p>
+  <div class="conflict-stats-row" id="conflict-stats-row">
+    <div class="stat-chip"><span id="cg-nodes">—</span><span class="stat-chip-label">Nodes |V|</span></div>
+    <div class="stat-chip"><span id="cg-edges">—</span><span class="stat-chip-label">Edges |E|</span></div>
+    <div class="stat-chip"><span id="cg-avgdeg">—</span><span class="stat-chip-label">Avg degree</span></div>
+    <div class="stat-chip"><span id="cg-maxdeg">—</span><span class="stat-chip-label">Max degree</span></div>
+    <div class="stat-chip"><span id="cg-components">—</span><span class="stat-chip-label">Components</span></div>
+    <div class="stat-chip"><span id="cg-chromatic">—</span><span class="stat-chip-label">Est. min timeslots</span></div>
+  </div>
+  <div class="analysis-row" style="margin-top:10px;">
+    <div class="chart-card">
+      <div class="chart-title">Degree distribution — conflicts per section</div>
+      <div class="chart-sub" id="cg-chart-sub">Load a run to compute</div>
+      <div class="chart-wrap"><canvas id="chart-conflict-degree"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">DSATUR ordering — first 10 scheduled sections</div>
+      <div class="chart-sub">Highest saturation degree (most distinct-colored neighbors) is scheduled next; ties broken by degree.</div>
+      <div id="dsatur-table"></div>
+    </div>
+  </div>
+
+  <!-- ── Divide & Conquer ──────────────────────────────────────────────────── -->
+  <div class="section-title" style="margin-top:24px;">Divide &amp; Conquer Strategy</div>
+  <div class="dc-section">
+    <div class="dc-flow">
+      <div class="dc-box dc-input">Full UCTP<br><span class="dc-detail">896 classes · 63 rooms · 30,846 students</span></div>
+      <div class="dc-arrow">↓ &nbsp;partition into two sub-problems</div>
+      <div class="dc-split">
+        <div class="dc-box dc-sub">Phase 1<br><span class="dc-detail">Course → Room / Time<br>Chromosome: (n × 2) int array<br>Uniform crossover</span></div>
+        <div class="dc-sep">→</div>
+        <div class="dc-box dc-sub">Phase 2<br><span class="dc-detail">Student → Section<br>Chromosome: student permutation<br>Order Crossover (OX)</span></div>
+      </div>
+      <div class="dc-arrow">↓ &nbsp;Phase 1 best genome seeds Phase 2</div>
+      <div class="dc-box dc-output">Final Timetable<br><span class="dc-detail">Conflict-free · 91.6% student coverage</span></div>
+    </div>
+    <div class="dc-explain-list">
+      <div class="explain-step">
+        <div class="step-num">1</div>
+        <div><strong>Partition:</strong> The full problem is split into two independent sub-problems — room/time assignment and student sectioning — each with its own chromosome, fitness function, and search operators.</div>
+      </div>
+      <div class="explain-step">
+        <div class="step-num">2</div>
+        <div><strong>Conquer (Phase 1):</strong> Runs a GA on the (room, time) sub-problem. Fitness = hard_weight × hard_violations + soft_penalties. Result: a fixed room/time assignment for every class.</div>
+      </div>
+      <div class="explain-step">
+        <div class="step-num">3</div>
+        <div><strong>Conquer (Phase 2):</strong> Takes the Phase 1 schedule as a fixed constraint. Runs a separate GA over student processing order using Order Crossover (OX) to preserve valid permutations.</div>
+      </div>
+      <div class="explain-step">
+        <div class="step-num">4</div>
+        <div><strong>Merge:</strong> Phase 2 greedily assigns each student to an available section in the Phase 1 timetable, respecting time conflicts and capacity limits. The two solutions combine into the final schedule.</div>
+      </div>
+      <div class="explain-step">
+        <div class="step-num">5</div>
+        <div><strong>Why it works:</strong> Decoupling reduces the joint search space from O((|R|·|T|·|S|)^n) to two tractable sub-problems, allowing each GA to converge faster on a focused objective.</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
@@ -413,6 +517,47 @@
       <span>Overall feasibility</span><span class="feas-val" id="fr-total-val">—</span>
     </div>
   </div>
+
+  <!-- Room utilisation chart -->
+  <div class="section-title" style="margin-top:20px;">Room Utilisation</div>
+  <div class="chart-card" style="margin-bottom:12px;">
+    <div class="chart-title">Average fill rate per class, by room (top 20)</div>
+    <div class="chart-sub" id="room-chart-sub">No data loaded</div>
+    <div class="chart-wrap chart-rooms"><canvas id="chart-rooms"></canvas></div>
+  </div>
+
+  <!-- Over-capacity classes + Section fill distribution -->
+  <div class="analysis-row" style="margin-bottom:12px;">
+    <div class="chart-card">
+      <div class="chart-title">Over-Capacity Classes</div>
+      <div id="overcap-content"><span class="text-muted" style="font-size:12px;">No data loaded</span></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Section Fill Distribution</div>
+      <div class="chart-sub" id="fill-dist-sub">No Phase 2 data</div>
+      <div class="fill-dist-wrap" id="fill-dist-content" style="display:none;">
+        <canvas id="chart-fill-dist"></canvas>
+        <div id="fill-dist-legend" class="fill-dist-legend"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top 20 section load -->
+  <div class="chart-card">
+    <div class="chart-title">Top 20 Most Enrolled Sections</div>
+    <div class="chart-sub" id="section-load-sub">No Phase 2 data loaded</div>
+    <div id="section-load-table"></div>
+  </div>
+
+  <!-- Scaling Analysis -->
+  <div class="section-title" style="margin-top:20px;">Scaling Analysis</div>
+  <div class="chart-card" style="margin-bottom:12px;">
+    <div class="chart-title">Runtime &amp; feasibility vs. problem size (pop=30, gen=50)</div>
+    <div class="chart-sub" id="scaling-chart-sub">No scaling data — run: <code>python scripts/export_scaling.py</code></div>
+    <div class="chart-wrap chart-scaling"><canvas id="chart-scaling"></canvas></div>
+  </div>
+  <div id="scaling-table-wrap"></div>
+
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════════════════ -->
@@ -432,6 +577,166 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<!-- CONTRIBUTORS AND PROJECT INFO                                              -->
+<!-- ══════════════════════════════════════════════════════════════════════════ -->
+<div id="tab-authors" class="tab-panel">
+  <!-- Hero -->
+  <div class="about-hero">
+    <div>
+      <h1 class="about-hero-title">University Course Timetabling Problem</h1>
+      <div class="about-hero-tags">
+        <span class="about-tag about-tag-gold">Genetic Algorithm</span>
+        <span class="about-tag about-tag-blue">Two-Phase Solver</span>
+        <span class="about-tag about-tag-green">10,000+ Students</span>
+        <span class="about-tag about-tag-purple">500+ Courses</span>
+        <span class="about-tag about-tag-gray">MIT License</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <div class="about-section">
+    <div class="about-section-title">Overview</div>
+    <p class="about-prose">
+      <strong>UniversityTimeTable</strong> is a two-phase Genetic Algorithm (GA) solver for the
+      University Course Timetabling Problem (UCTP), using a real dataset from Purdue University
+      (Fall 2007). The system produces a conflict-free schedule with minimized idle gaps across
+      10,000+ students and 500+ courses.
+    </p>
+    <div class="about-phases">
+      <div class="about-phase-card about-phase-blue">
+        <div class="about-phase-num">Phase 1</div>
+        <div class="about-phase-name">Course Scheduling</div>
+        <div class="about-phase-desc">Assign 896+ course sections to rooms and time slots using a GA with uniform crossover and hard/soft constraint fitness.</div>
+        <div class="about-phase-stat">896 classes · 63 rooms · 2016 time cells</div>
+      </div>
+      <div class="about-phase-card about-phase-green">
+        <div class="about-phase-num">Phase 2</div>
+        <div class="about-phase-name">Student Sectioning</div>
+        <div class="about-phase-desc">Assign 30,000+ students into scheduled sections using a GA over student-processing order with greedy placement.</div>
+        <div class="about-phase-stat">30,846 students · Order Crossover (OX)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Goals -->
+  <div class="about-section">
+    <div class="about-section-title">Goals</div>
+    <div class="about-goals">
+      <div class="about-goal">
+        <span class="about-goal-icon">🎯</span>
+        <div><strong>Global feasibility</strong> — Generate a conflict-free schedule for a simulated university of 10,000+ students.</div>
+      </div>
+      <div class="about-goal">
+        <span class="about-goal-icon">📐</span>
+        <div><strong>Optimization</strong> — Maximize compactness by minimizing idle gaps between lectures for student cohorts.</div>
+      </div>
+      <div class="about-goal">
+        <span class="about-goal-icon">📊</span>
+        <div><strong>Scalability &amp; clarity</strong> — Show runtime &amp; improvement curves, explain ordering/pruning, provide one-command reproducibility with fixed seed.</div>
+      </div>
+      <div class="about-goal">
+        <span class="about-goal-icon">📦</span>
+        <div><strong>Professional deliverable</strong> — Organized code, concise README, useful outputs and plots.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Constraints -->
+  <div class="about-section">
+    <div class="about-section-title">Constraints</div>
+    <div class="about-constraints-grid">
+      <div class="about-constraints-col">
+        <div class="about-constraints-header about-hard-header">🔴 Hard — must be zero</div>
+        <ul class="about-constraint-list">
+          <li><strong>Non-Overlap</strong> — No double-booking of rooms, instructors, or cohorts</li>
+          <li><strong>Room capacity</strong> — Enrollment must not exceed available seats</li>
+          <li><strong>Resource &amp; suitability</strong> — Room must have required equipment</li>
+          <li><strong>Course structure</strong> — Valid lecture + lab combinations maintained</li>
+          <li><strong>Instructor qualification</strong> — Only qualified instructors assigned</li>
+          <li><strong>Instructor availability</strong> — Blocked times are non-negotiable</li>
+          <li><strong>Travel time limits</strong> — Back-to-back classes allow feasible walk time</li>
+        </ul>
+      </div>
+      <div class="about-constraints-col">
+        <div class="about-constraints-header about-soft-header">🟡 Soft — minimize penalty</div>
+        <ul class="about-constraint-list">
+          <li><strong>Student gap minimization</strong> — Reduce idle dead hours within a day</li>
+          <li><strong>Hybrid modeling</strong> — Allow hybrid/online courses to use a virtual room</li>
+          <li><strong>Workload distribution</strong> — Reasonable daily/consecutive teaching limits</li>
+          <li><strong>Preference satisfaction</strong> — Honor non-required faculty time preferences</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div class="about-section">
+    <div class="about-section-title">Team Contributors</div>
+    <div class="about-team-grid">
+      <a class="about-member-card" href="https://github.com/colochoo" target="_blank" rel="noopener">
+        <div class="about-avatar" style="background:linear-gradient(135deg,#BA7517,#EF9F27)">CA</div>
+        <div class="about-member-name">Cesar Arevalo Colocho</div>
+        <div class="about-member-role">UI Designer &amp; Backend Developer</div>
+        <div class="about-member-gh">github.com/colochoo</div>
+      </a>
+      <a class="about-member-card" href="https://github.com/ricardorickycampos" target="_blank" rel="noopener">
+        <div class="about-avatar" style="background:linear-gradient(135deg,#3B82F6,#06B6D4)">RC</div>
+        <div class="about-member-name">Ricardo Campos</div>
+        <div class="about-member-role">Algorithm Implementer</div>
+        <div class="about-member-gh">github.com/ricardorickycampos</div>
+      </a>
+      <a class="about-member-card" href="https://github.com/BradenMizell" target="_blank" rel="noopener">
+        <div class="about-avatar" style="background:linear-gradient(135deg,#10B981,#14B8A6)">BM</div>
+        <div class="about-member-name">Braden Mizell</div>
+        <div class="about-member-role">Documentation Writer</div>
+        <div class="about-member-gh">github.com/BradenMizell</div>
+      </a>
+      <a class="about-member-card" href="https://github.com/ebanks28" target="_blank" rel="noopener">
+        <div class="about-avatar" style="background:linear-gradient(135deg,#8B5CF6,#D946EF)">EB</div>
+        <div class="about-member-name">Evan Banks</div>
+        <div class="about-member-role">Documentation Formatter</div>
+        <div class="about-member-gh">github.com/ebanks28</div>
+      </a>
+      <a class="about-member-card" href="https://github.com/BarBabe" target="_blank" rel="noopener">
+        <div class="about-avatar" style="background:linear-gradient(135deg,#EC4899,#F97316)">AJ</div>
+        <div class="about-member-name">Alice Johnson</div>
+        <div class="about-member-role">Documentation Writer</div>
+        <div class="about-member-gh">github.com/BarBabe</div>
+      </a>
+      <div class="about-member-card">
+        <div class="about-avatar" style="background:linear-gradient(135deg,#64748B,#94A3B8)">DO</div>
+        <div class="about-member-name">David Odumade</div>
+        <div class="about-member-role">Algorithm Designer</div>
+        <div class="about-member-gh" style="opacity:.4;">No GitHub listed</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resources + License -->
+  <div class="about-bottom-row">
+    <div class="about-section about-resources">
+      <div class="about-section-title">Resources</div>
+      <ol class="about-ref-list">
+        <li>Abdipoor et al., 2023. <em>Meta-heuristic approaches for the university course timetabling problem.</em> Intelligent Systems with Applications, 19, p.200253.</li>
+        <li>Rezaeipanah et al., 2021. <em>A hybrid algorithm for the UCTP using improved parallel GA and local search.</em> Applied Intelligence, 51(1), pp.467–492.</li>
+        <li>Awad et al., 2022. <em>Large-scale timetabling problems with adaptive tabu search.</em> Journal of Intelligent Systems, 31(1), pp.168–176.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="about-license-card">
+    <div class="about-license-icon">⚖️</div>
+    <div class="about-license-title">MIT License</div>
+    <div class="about-license-desc">Free to use, modify, and distribute with attribution.</div>
+    <div class="about-license-course">CS 4306 – Algorithm Analysis<br>Kennesaw State University</div>
+  </div>
+
+</div>
+
 <script src="app.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
