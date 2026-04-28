@@ -1,12 +1,23 @@
 {
   "phase1": [
-    "phase1_6000_best.json"
+    "phase1_6000_best.json",
+    "run_260426_2310_100_9490.json",
+    "run_260426_2315_100_-52034.json"
   ],
   "phase2_logs": [
+    "phase2_260426_2310_200_6105_log.json",
+    "phase2_260426_2315_500_8120_log.json",
     "phase2_full_log.json"
   ],
   "phase2_assignments": [
+    "phase2_260426_2310_200_6105_assignment.json",
+    "phase2_260426_2315_500_8120_assignment.json",
     "phase2_full_assignment.json"
   ],
-  "schedules": []
+  "schedules": [
+    "schedule_phase1_6000_best.json"
+  ],
+  "analyses": [
+    "analysis_phase1_6000_best.json"
+  ]
 }

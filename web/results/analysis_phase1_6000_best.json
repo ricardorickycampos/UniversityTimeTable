@@ -1,0 +1,494 @@
+{
+  "run_id": "phase1_6000_best",
+  "violations": {
+    "hard": {
+      "room_conflicts": 28,
+      "instructor_conflicts": 0,
+      "room_sharing": 7,
+      "group": 1,
+      "total": 36
+    },
+    "soft": {
+      "preferences": -3554.0,
+      "instructor_workload": 0.0,
+      "group": 63805.0,
+      "capacity": 6500.0,
+      "total": 66751.0
+    },
+    "fitness": 102751.0,
+    "is_feasible": false
+  },
+  "room_usage": [
+    {
+      "room_id": 56,
+      "room_cap": 51,
+      "n_classes": 1,
+      "total_enrolled": 49,
+      "avg_fill_pct": 96.1
+    },
+    {
+      "room_id": 40,
+      "room_cap": 80,
+      "n_classes": 12,
+      "total_enrolled": 915,
+      "avg_fill_pct": 95.3
+    },
+    {
+      "room_id": 29,
+      "room_cap": 66,
+      "n_classes": 12,
+      "total_enrolled": 744,
+      "avg_fill_pct": 93.9
+    },
+    {
+      "room_id": 32,
+      "room_cap": 82,
+      "n_classes": 12,
+      "total_enrolled": 909,
+      "avg_fill_pct": 92.4
+    },
+    {
+      "room_id": 41,
+      "room_cap": 80,
+      "n_classes": 13,
+      "total_enrolled": 960,
+      "avg_fill_pct": 92.3
+    },
+    {
+      "room_id": 13,
+      "room_cap": 220,
+      "n_classes": 6,
+      "total_enrolled": 1200,
+      "avg_fill_pct": 90.9
+    },
+    {
+      "room_id": 52,
+      "room_cap": 44,
+      "n_classes": 2,
+      "total_enrolled": 80,
+      "avg_fill_pct": 90.9
+    },
+    {
+      "room_id": 35,
+      "room_cap": 96,
+      "n_classes": 19,
+      "total_enrolled": 1638,
+      "avg_fill_pct": 89.8
+    },
+    {
+      "room_id": 18,
+      "room_cap": 197,
+      "n_classes": 26,
+      "total_enrolled": 4549,
+      "avg_fill_pct": 88.8
+    },
+    {
+      "room_id": 33,
+      "room_cap": 84,
+      "n_classes": 17,
+      "total_enrolled": 1264,
+      "avg_fill_pct": 88.5
+    },
+    {
+      "room_id": 16,
+      "room_cap": 115,
+      "n_classes": 18,
+      "total_enrolled": 1826,
+      "avg_fill_pct": 88.2
+    },
+    {
+      "room_id": 31,
+      "room_cap": 89,
+      "n_classes": 16,
+      "total_enrolled": 1255,
+      "avg_fill_pct": 88.1
+    },
+    {
+      "room_id": 1,
+      "room_cap": 118,
+      "n_classes": 19,
+      "total_enrolled": 1971,
+      "avg_fill_pct": 87.9
+    },
+    {
+      "room_id": 19,
+      "room_cap": 205,
+      "n_classes": 18,
+      "total_enrolled": 3236,
+      "avg_fill_pct": 87.7
+    },
+    {
+      "room_id": 49,
+      "room_cap": 60,
+      "n_classes": 10,
+      "total_enrolled": 525,
+      "avg_fill_pct": 87.5
+    },
+    {
+      "room_id": 45,
+      "room_cap": 60,
+      "n_classes": 11,
+      "total_enrolled": 577,
+      "avg_fill_pct": 87.4
+    },
+    {
+      "room_id": 47,
+      "room_cap": 60,
+      "n_classes": 12,
+      "total_enrolled": 628,
+      "avg_fill_pct": 87.2
+    },
+    {
+      "room_id": 28,
+      "room_cap": 88,
+      "n_classes": 17,
+      "total_enrolled": 1286,
+      "avg_fill_pct": 86.0
+    },
+    {
+      "room_id": 36,
+      "room_cap": 99,
+      "n_classes": 16,
+      "total_enrolled": 1361,
+      "avg_fill_pct": 85.9
+    },
+    {
+      "room_id": 39,
+      "room_cap": 75,
+      "n_classes": 12,
+      "total_enrolled": 771,
+      "avg_fill_pct": 85.7
+    },
+    {
+      "room_id": 59,
+      "room_cap": 54,
+      "n_classes": 5,
+      "total_enrolled": 230,
+      "avg_fill_pct": 85.2
+    },
+    {
+      "room_id": 34,
+      "room_cap": 78,
+      "n_classes": 16,
+      "total_enrolled": 1061,
+      "avg_fill_pct": 85.0
+    },
+    {
+      "room_id": 51,
+      "room_cap": 49,
+      "n_classes": 4,
+      "total_enrolled": 166,
+      "avg_fill_pct": 84.7
+    },
+    {
+      "room_id": 11,
+      "room_cap": 180,
+      "n_classes": 21,
+      "total_enrolled": 3195,
+      "avg_fill_pct": 84.5
+    },
+    {
+      "room_id": 43,
+      "room_cap": 91,
+      "n_classes": 15,
+      "total_enrolled": 1139,
+      "avg_fill_pct": 83.4
+    },
+    {
+      "room_id": 50,
+      "room_cap": 63,
+      "n_classes": 11,
+      "total_enrolled": 578,
+      "avg_fill_pct": 83.4
+    },
+    {
+      "room_id": 60,
+      "room_cap": 54,
+      "n_classes": 5,
+      "total_enrolled": 225,
+      "avg_fill_pct": 83.3
+    },
+    {
+      "room_id": 23,
+      "room_cap": 75,
+      "n_classes": 11,
+      "total_enrolled": 682,
+      "avg_fill_pct": 82.7
+    },
+    {
+      "room_id": 37,
+      "room_cap": 70,
+      "n_classes": 14,
+      "total_enrolled": 809,
+      "avg_fill_pct": 82.6
+    },
+    {
+      "room_id": 61,
+      "room_cap": 40,
+      "n_classes": 3,
+      "total_enrolled": 99,
+      "avg_fill_pct": 82.5
+    }
+  ],
+  "over_capacity": [
+    {
+      "class_id": 754,
+      "department": 40,
+      "limit": 600,
+      "room_id": 18,
+      "room_cap": 197,
+      "over_cap": 403
+    },
+    {
+      "class_id": 97,
+      "department": 30,
+      "limit": 426,
+      "room_id": 9,
+      "room_cap": 189,
+      "over_cap": 237
+    },
+    {
+      "class_id": 98,
+      "department": 30,
+      "limit": 426,
+      "room_id": 9,
+      "room_cap": 189,
+      "over_cap": 237
+    },
+    {
+      "class_id": 96,
+      "department": 30,
+      "limit": 423,
+      "room_id": 9,
+      "room_cap": 189,
+      "over_cap": 234
+    },
+    {
+      "class_id": 879,
+      "department": 14,
+      "limit": 204,
+      "room_id": 33,
+      "room_cap": 84,
+      "over_cap": 120
+    },
+    {
+      "class_id": 546,
+      "department": 62,
+      "limit": 150,
+      "room_id": 29,
+      "room_cap": 66,
+      "over_cap": 84
+    },
+    {
+      "class_id": 666,
+      "department": 46,
+      "limit": 209,
+      "room_id": 17,
+      "room_cap": 136,
+      "over_cap": 73
+    },
+    {
+      "class_id": 21,
+      "department": 21,
+      "limit": 120,
+      "room_id": 24,
+      "room_cap": 84,
+      "over_cap": 36
+    },
+    {
+      "class_id": 68,
+      "department": 6,
+      "limit": 117,
+      "room_id": 36,
+      "room_cap": 99,
+      "over_cap": 18
+    },
+    {
+      "class_id": 69,
+      "department": 6,
+      "limit": 117,
+      "room_id": 36,
+      "room_cap": 99,
+      "over_cap": 18
+    },
+    {
+      "class_id": 70,
+      "department": 6,
+      "limit": 117,
+      "room_id": 36,
+      "room_cap": 99,
+      "over_cap": 18
+    },
+    {
+      "class_id": 25,
+      "department": 21,
+      "limit": 130,
+      "room_id": 7,
+      "room_cap": 128,
+      "over_cap": 2
+    },
+    {
+      "class_id": 67,
+      "department": 6,
+      "limit": 117,
+      "room_id": 16,
+      "room_cap": 115,
+      "over_cap": 2
+    }
+  ],
+  "phase2": {
+    "n_students": 4,
+    "coverage_pct": 80.95238095238095,
+    "enrollments_placed": 34,
+    "enrollments_skipped": 8,
+    "section_load": [
+      {
+        "class_id": 7,
+        "offering": 7,
+        "enrolled": 2,
+        "limit": 88,
+        "fill_pct": 2.3
+      },
+      {
+        "class_id": 3,
+        "offering": 3,
+        "enrolled": 1,
+        "limit": 88,
+        "fill_pct": 1.1
+      },
+      {
+        "class_id": 4,
+        "offering": 4,
+        "enrolled": 1,
+        "limit": 88,
+        "fill_pct": 1.1
+      },
+      {
+        "class_id": 9,
+        "offering": 9,
+        "enrolled": 1,
+        "limit": 70,
+        "fill_pct": 1.4
+      },
+      {
+        "class_id": 12,
+        "offering": 12,
+        "enrolled": 1,
+        "limit": 88,
+        "fill_pct": 1.1
+      },
+      {
+        "class_id": 13,
+        "offering": 13,
+        "enrolled": 1,
+        "limit": 42,
+        "fill_pct": 2.4
+      },
+      {
+        "class_id": 15,
+        "offering": 15,
+        "enrolled": 1,
+        "limit": 118,
+        "fill_pct": 0.8
+      },
+      {
+        "class_id": 17,
+        "offering": 17,
+        "enrolled": 1,
+        "limit": 180,
+        "fill_pct": 0.6
+      },
+      {
+        "class_id": 19,
+        "offering": 18,
+        "enrolled": 1,
+        "limit": 118,
+        "fill_pct": 0.8
+      },
+      {
+        "class_id": 20,
+        "offering": 19,
+        "enrolled": 1,
+        "limit": 55,
+        "fill_pct": 1.8
+      },
+      {
+        "class_id": 22,
+        "offering": 21,
+        "enrolled": 1,
+        "limit": 445,
+        "fill_pct": 0.2
+      },
+      {
+        "class_id": 25,
+        "offering": 22,
+        "enrolled": 1,
+        "limit": 130,
+        "fill_pct": 0.8
+      },
+      {
+        "class_id": 26,
+        "offering": 23,
+        "enrolled": 1,
+        "limit": 80,
+        "fill_pct": 1.2
+      },
+      {
+        "class_id": 28,
+        "offering": 25,
+        "enrolled": 1,
+        "limit": 409,
+        "fill_pct": 0.2
+      },
+      {
+        "class_id": 29,
+        "offering": 26,
+        "enrolled": 1,
+        "limit": 90,
+        "fill_pct": 1.1
+      },
+      {
+        "class_id": 31,
+        "offering": 28,
+        "enrolled": 1,
+        "limit": 94,
+        "fill_pct": 1.1
+      },
+      {
+        "class_id": 33,
+        "offering": 30,
+        "enrolled": 1,
+        "limit": 125,
+        "fill_pct": 0.8
+      },
+      {
+        "class_id": 34,
+        "offering": 31,
+        "enrolled": 1,
+        "limit": 196,
+        "fill_pct": 0.5
+      },
+      {
+        "class_id": 35,
+        "offering": 31,
+        "enrolled": 1,
+        "limit": 196,
+        "fill_pct": 0.5
+      },
+      {
+        "class_id": 37,
+        "offering": 31,
+        "enrolled": 1,
+        "limit": 82,
+        "fill_pct": 1.2
+      }
+    ],
+    "fill_distribution": {
+      "empty": 863,
+      "under_50": 33,
+      "f50_75": 0,
+      "f75_99": 0,
+      "full": 0
+    }
+  }
+}
