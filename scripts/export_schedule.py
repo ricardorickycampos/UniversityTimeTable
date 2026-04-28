@@ -143,21 +143,138 @@ def export_one(genome_path: Path, tt, pp, run_id: str) -> dict:
     return out
 
 
+def export_analysis(
+    genome_path: Path,
+    tt,
+    pp,
+    run_id: str,
+    p2_path: Path | None = None,
+) -> bool:
+    """Write analysis_<run_id>.json: room usage, violations, over-capacity, phase2 stats."""
+    genome = np.load(genome_path)
+    if genome.shape[0] != len(tt.classes):
+        print(f'  SKIP analysis {run_id}: genome size mismatch')
+        return False
+
+    detail = evaluate_detailed(pp, genome)
+
+    # Room usage — track n_classes and total_enrolled per room
+    room_data: dict[int, dict] = {}
+    for ci, cls in enumerate(tt.classes):
+        if not cls.candidate_rooms:
+            continue
+        rid = cls.candidate_rooms[int(genome[ci, 0])].room_id
+        room = tt.rooms_by_id[rid]
+        if rid not in room_data:
+            room_data[rid] = {
+                'room_id': rid, 'room_cap': room.capacity,
+                'n_classes': 0, 'total_enrolled': 0,
+            }
+        room_data[rid]['n_classes'] += 1
+        room_data[rid]['total_enrolled'] += cls.class_limit
+
+    room_usage = []
+    for rd in room_data.values():
+        n, cap = rd['n_classes'], rd['room_cap']
+        avg_fill = round((rd['total_enrolled'] / n) / cap * 100, 1) if cap and n else 0.0
+        room_usage.append({**rd, 'avg_fill_pct': avg_fill})
+    room_usage.sort(key=lambda x: -x['avg_fill_pct'])
+
+    # Over-capacity classes
+    over_capacity = []
+    for ci, cls in enumerate(tt.classes):
+        if not cls.candidate_rooms:
+            continue
+        rid = cls.candidate_rooms[int(genome[ci, 0])].room_id
+        room = tt.rooms_by_id[rid]
+        over = cls.class_limit - room.capacity
+        if over > 0:
+            over_capacity.append({
+                'class_id': cls.id, 'department': cls.department,
+                'limit': cls.class_limit, 'room_id': room.id,
+                'room_cap': room.capacity, 'over_cap': over,
+            })
+    over_capacity.sort(key=lambda x: -x['over_cap'])
+
+    out: dict = {
+        'run_id': run_id,
+        'violations': {
+            'hard': {k: int(v) if isinstance(v, (int, float)) else v
+                     for k, v in detail['hard'].items()},
+            'soft': {k: round(float(v), 2) if isinstance(v, (int, float)) else v
+                     for k, v in detail['soft'].items()},
+            'fitness': float(detail['fitness']),
+            'is_feasible': bool(detail['is_feasible']),
+        },
+        'room_usage': room_usage[:30],
+        'over_capacity': over_capacity,
+        'phase2': None,
+    }
+
+    if p2_path and p2_path.exists():
+        with open(p2_path) as f:
+            p2 = json.load(f)
+
+        se = p2.get('section_enrollments', {})
+        section_load = []
+        for cls in tt.classes:
+            enrolled = int(se.get(str(cls.id), se.get(cls.id, 0)))
+            fill_pct = round(enrolled / cls.class_limit * 100, 1) if cls.class_limit else 0.0
+            section_load.append({
+                'class_id': cls.id, 'offering': cls.offering,
+                'enrolled': enrolled, 'limit': cls.class_limit, 'fill_pct': fill_pct,
+            })
+        section_load.sort(key=lambda x: -x['enrolled'])
+
+        fill_dist = {'empty': 0, 'under_50': 0, 'f50_75': 0, 'f75_99': 0, 'full': 0}
+        for s in section_load:
+            if s['enrolled'] == 0:
+                fill_dist['empty'] += 1
+            elif s['fill_pct'] < 50:
+                fill_dist['under_50'] += 1
+            elif s['fill_pct'] < 75:
+                fill_dist['f50_75'] += 1
+            elif s['fill_pct'] < 100:
+                fill_dist['f75_99'] += 1
+            else:
+                fill_dist['full'] += 1
+
+        fb = p2.get('final_breakdown') or {}
+        out['phase2'] = {
+            'n_students':          p2.get('n_students_processed') or fb.get('n_students'),
+            'coverage_pct':        p2.get('coverage_pct')         or fb.get('coverage_pct'),
+            'enrollments_placed':  p2.get('n_enrollments_placed') or fb.get('enrollments_placed'),
+            'enrollments_skipped': p2.get('n_enrollments_skipped')or fb.get('enrollments_skipped'),
+            'section_load':        section_load[:20],
+            'fill_distribution':   fill_dist,
+        }
+
+    out_path = WEB_RESULTS / f'analysis_{run_id}.json'
+    out_path.write_text(json.dumps(out, indent=2))
+    print(f'  Wrote {out_path.name}  '
+          f'(rooms={len(room_usage)}, overcap={len(over_capacity)}, '
+          f'phase2={"yes" if out["phase2"] else "no"})')
+    return True
+
+
 def build_manifest(
     p1_logs: list[str],
     p2_logs: list[str],
     p2_assignments: list[str],
     schedules: list[str],
+    analyses: list[str] | None = None,
 ) -> None:
     manifest = {
-        'phase1':          sorted(p1_logs),
-        'phase2_logs':     sorted(p2_logs),
+        'phase1':             sorted(p1_logs),
+        'phase2_logs':        sorted(p2_logs),
         'phase2_assignments': sorted(p2_assignments),
-        'schedules':       sorted(schedules),
+        'schedules':          sorted(schedules),
+        'analyses':           sorted(analyses or []),
     }
     path = WEB_RESULTS / 'manifest.json'
     path.write_text(json.dumps(manifest, indent=2))
-    print(f'Wrote manifest.json ({len(p1_logs)} phase1, {len(p2_logs)} phase2 runs)')
+    print(f'Wrote manifest.json ({len(p1_logs)} phase1, {len(schedules)} schedules, '
+          f'{len(analyses or [])} analyses)')
 
 
 def main():
@@ -188,13 +305,20 @@ def main():
     genome_files = sorted(RESULTS_DIR.glob('*_best.npy'))
     if not genome_files:
         print('  No *_best.npy genome files found in results/. Skipping schedule export.')
-        build_manifest(p1_logs, p2_logs, p2_assignments, [])
+        build_manifest(p1_logs, p2_logs, p2_assignments, [], [])
         return
 
     # Cache loaded timetable by subset to avoid reloading per genome
     loaded: dict[int | None, tuple] = {}
 
-    schedules = []
+    # Find latest phase2 assignment for cross-referencing in analysis
+    p2_asgn_candidates = sorted(RESULTS_DIR.glob('phase2_*assignment*.json'),
+                                key=lambda p: p.stat().st_mtime)
+    p2_asgn_path = p2_asgn_candidates[-1] if p2_asgn_candidates else None
+
+    schedules: list[str] = []
+    analyses:  list[str] = []
+
     for gf in genome_files:
         # run_id = full stem of the .npy file (e.g. "phase1_6000_best")
         run_id = gf.stem
@@ -223,7 +347,10 @@ def main():
         if result:
             schedules.append(f'schedule_{run_id}.json')
 
-    build_manifest(p1_logs, p2_logs, p2_assignments, schedules)
+        if export_analysis(gf, tt, pp, run_id, p2_asgn_path):
+            analyses.append(f'analysis_{run_id}.json')
+
+    build_manifest(p1_logs, p2_logs, p2_assignments, schedules, analyses)
     print('\nDone. Commit the web/results/ folder to enable static mode on GitHub Pages.')
 
 

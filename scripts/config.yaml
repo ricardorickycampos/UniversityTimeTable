@@ -1,7 +1,7 @@
 # Configuration file for the GA-based sectioning algorithm.
 
 data:
-  input_path: data/uploaded_data.xml
+  input_path: data/data.xml
   subset: null # Max 896 classes, set null for full dataset.
 
 student_sectioning:
